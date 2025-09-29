@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer utilities {
+
+    /* Force ALL pagination elements to be white */
+    nav[role="navigation"] * {
+        background-color: white !important;
+        color: #2563eb !important;
+        border-color: #d1d5db !important;
+    }
+
+    /* Active page - blue background */
+    nav[role="navigation"] [aria-current="page"],
+    nav[role="navigation"] [aria-current="page"] * {
+        background-color: #2563eb !important;
+        color: white !important;
+        border-color: #2563eb !important;
+    }
+}
+
+/* Auth Page */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-bg {
+    background: linear-gradient(-45deg, #2563eb, #2563eb, #1e40af, #2563eb);
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+/* End Auth Page */
