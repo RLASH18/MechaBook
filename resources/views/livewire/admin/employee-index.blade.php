@@ -1,6 +1,6 @@
 <div>
     {{-- Employee Table --}}
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4">
+    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow pt-4">
         <x-table.header title="Employee List" />
 
         {{-- Table --}}

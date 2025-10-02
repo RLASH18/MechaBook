@@ -33,7 +33,7 @@
     </div>
 
     {{-- Form Container --}}
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow">
         <form action="{{ route('admin.employee.store') }}" method="POST" class="p-6">
             @csrf
 
@@ -42,17 +42,17 @@
                 <div class="space-y-6">
                     {{-- Full Name --}}
                     <div>
-                        <x-form.label for="name" required>Full Name</x-form.label>
+                        <x-form.label for="name">Full Name</x-form.label>
                         <x-form.input id="name" name="name" type="text" placeholder="Enter employee's full name"
-                            value="{{ old('name') }}" required />
+                            value="{{ old('name') }}" />
                         <x-form.error name="name" />
                     </div>
 
                     {{-- Email Address --}}
                     <div>
-                        <x-form.label for="email" required>Email Address</x-form.label>
+                        <x-form.label for="email">Email Address</x-form.label>
                         <x-form.input id="email" name="email" type="email" placeholder="Enter email address"
-                            value="{{ old('email') }}" required />
+                            value="{{ old('email') }}" />
                         <x-form.error name="email" />
                     </div>
 
@@ -69,25 +69,20 @@
                 <div class="space-y-6">
                     {{-- Password --}}
                     <div>
-                        <x-form.label for="password" required>Password</x-form.label>
+                        <x-form.label for="password">Password</x-form.label>
                         <x-form.input id="password" name="password" type="password" placeholder="Enter password"
-                            required />
+                         />
                         <x-form.error name="password" />
                         <p class="mt-1 text-sm text-gray-500">Password must be at least 8 characters long.</p>
                     </div>
 
                     {{-- Confirm Password --}}
                     <div>
-                        <x-form.label for="password_confirmation" required>Confirm Password</x-form.label>
+                        <x-form.label for="password_confirmation">Confirm Password</x-form.label>
                         <x-form.input id="password_confirmation" name="password_confirmation" type="password"
-                            placeholder="Confirm password" required />
+                            placeholder="Confirm password" />
                         <x-form.error name="password_confirmation" />
                     </div>
-
-                    {{-- Role (Hidden - defaults to employee) --}}
-                    <input type="hidden" name="role" value="employee">
-
-
                 </div>
             </div>
 
