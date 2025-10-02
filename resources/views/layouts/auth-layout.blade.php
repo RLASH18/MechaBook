@@ -10,7 +10,7 @@
     <div class="bg-white">
         <div class="flex justify-center h-screen">
             {{-- Left Side Panel --}}
-            <div class="hidden lg:flex lg:w-2/3 relative overflow-hidden animated-bg">
+            <div class="hidden lg:flex lg:w-3/5 relative overflow-hidden animated-bg">
                 {{-- Enhanced Overlay --}}
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-transparent to-black/40"></div>
 
@@ -76,7 +76,7 @@
             </div>
 
             {{-- Right Side Form --}}
-            <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+            <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/5">
                 <div class="flex-1">
                     <div class="text-center">
                         <div class="flex justify-center mx-auto">
