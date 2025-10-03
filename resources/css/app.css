@@ -11,7 +11,6 @@
 }
 
 @layer utilities {
-
     /* Force ALL pagination elements to be white */
     nav[role="navigation"] * {
         background-color: white !important;
@@ -25,6 +24,21 @@
         background-color: #2563eb !important;
         color: white !important;
         border-color: #2563eb !important;
+    }
+
+    /* Make all pagination links show pointer cursor */
+    nav[role="navigation"] a {
+        cursor: pointer !important;
+    }
+
+    /* Additional pagination cursor fixes */
+    nav[role="navigation"] a,
+    nav[role="navigation"] button,
+    nav[aria-label="Pagination Navigation"] a,
+    nav[aria-label="Pagination Navigation"] button,
+    .pagination a,
+    .pagination button {
+        cursor: pointer !important;
     }
 }
 
@@ -64,4 +78,5 @@
 .floating {
     animation: float 6s ease-in-out infinite;
 }
+
 /* End Auth Page */
