@@ -20,6 +20,7 @@ class ScheduleIndex extends Component
      */
     public function render()
     {
+        // Fetch all employees with their schedules (ordered by weekday),
         $employees = User::where('role', 'employee')
             ->with(['employeeSchedules' => function ($query) {
                 $query->orderByRaw("FIELD(day_of_week, 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')");

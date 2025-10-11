@@ -12,7 +12,9 @@ class EmployeeServices
      *
      * @param EmployeeInterface $employeeInterface
      */
-    public function __construct(protected EmployeeInterface $employeeInterface) {}
+    public function __construct(
+        protected EmployeeInterface $employeeInterface
+    ) {}
 
     /**
      * Retrieve an employee by their ID.

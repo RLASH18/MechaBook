@@ -13,7 +13,9 @@ class EmployeeController extends Controller
     /**
      * EmployeeServices dependency injection.
      */
-    public function __construct(protected EmployeeServices $employeeService) {}
+    public function __construct(
+        protected EmployeeServices $employeeService
+    ) {}
 
     /**
      * Display a listing of the resource.
