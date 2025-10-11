@@ -33,69 +33,63 @@
     </div>
 
     {{-- Form Container --}}
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow">
-        <form action="{{ route('admin.employee.store') }}" method="POST" class="p-6">
-            @csrf
-
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {{-- Left Column --}}
-                <div class="space-y-6">
-                    {{-- Full Name --}}
-                    <div>
-                        <x-form.label for="name">Full Name</x-form.label>
-                        <x-form.input id="name" name="name" type="text" placeholder="Enter employee's full name"
-                            value="{{ old('name') }}" />
-                        <x-form.error name="name" />
-                    </div>
-
-                    {{-- Email Address --}}
-                    <div>
-                        <x-form.label for="email">Email Address</x-form.label>
-                        <x-form.input id="email" name="email" type="email" placeholder="Enter email address"
-                            value="{{ old('email') }}" />
-                        <x-form.error name="email" />
-                    </div>
-
-                    {{-- Phone Number --}}
-                    <div>
-                        <x-form.label for="phone">Phone Number</x-form.label>
-                        <x-form.input id="phone" name="phone" type="tel" placeholder="Enter phone number"
-                            value="{{ old('phone') }}" />
-                        <x-form.error name="phone" />
-                    </div>
+    <x-form.container action="{{ route('admin.employee.store') }}">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {{-- Left Column --}}
+            <div class="space-y-6">
+                {{-- Full Name --}}
+                <div>
+                    <x-form.label for="name">Full Name</x-form.label>
+                    <x-form.input id="name" name="name" type="text" placeholder="Enter employee's full name"
+                        value="{{ old('name') }}" />
+                    <x-form.error name="name" />
                 </div>
 
-                {{-- Right Column --}}
-                <div class="space-y-6">
-                    {{-- Password --}}
-                    <div>
-                        <x-form.label for="password">Password</x-form.label>
-                        <x-form.input id="password" name="password" type="password" placeholder="Enter password"
-                         />
-                        <x-form.error name="password" />
-                        <p class="mt-1 text-sm text-gray-500">Password must be at least 8 characters long.</p>
-                    </div>
+                {{-- Email Address --}}
+                <div>
+                    <x-form.label for="email">Email Address</x-form.label>
+                    <x-form.input id="email" name="email" type="email" placeholder="Enter email address"
+                        value="{{ old('email') }}" />
+                    <x-form.error name="email" />
+                </div>
 
-                    {{-- Confirm Password --}}
-                    <div>
-                        <x-form.label for="password_confirmation">Confirm Password</x-form.label>
-                        <x-form.input id="password_confirmation" name="password_confirmation" type="password"
-                            placeholder="Confirm password" />
-                        <x-form.error name="password_confirmation" />
-                    </div>
+                {{-- Phone Number --}}
+                <div>
+                    <x-form.label for="phone">Phone Number</x-form.label>
+                    <x-form.input id="phone" name="phone" type="tel" placeholder="Enter phone number"
+                        value="{{ old('phone') }}" />
+                    <x-form.error name="phone" />
                 </div>
             </div>
 
-            {{-- Submit Button --}}
-            <div class="mt-8 flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-                <x-button-link href="{{ route('admin.employee.index') }}" text="Cancel" />
-                <x-form.button type="submit" text="Add Employee">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                </x-form.button>
+            {{-- Right Column --}}
+            <div class="space-y-6">
+                {{-- Password --}}
+                <div>
+                    <x-form.label for="password">Password</x-form.label>
+                    <x-form.input id="password" name="password" type="password" placeholder="Enter password" />
+                    <x-form.error name="password" />
+                    <p class="mt-1 text-sm text-gray-500">Password must be at least 8 characters long.</p>
+                </div>
+
+                {{-- Confirm Password --}}
+                <div>
+                    <x-form.label for="password_confirmation">Confirm Password</x-form.label>
+                    <x-form.input id="password_confirmation" name="password_confirmation" type="password"
+                        placeholder="Confirm password" />
+                    <x-form.error name="password_confirmation" />
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+
+        {{-- Submit Button --}}
+        <div class="mt-8 flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+            <x-button-link href="{{ route('admin.employee.index') }}" text="Cancel" />
+            <x-form.button type="submit" text="Add Employee">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+            </x-form.button>
+        </div>
+    </x-form.container>
 @endsection

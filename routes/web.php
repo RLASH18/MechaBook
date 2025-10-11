@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
+use App\Http\Controllers\admin\ScheduleController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,6 @@ Route::prefix('admin')->name('admin.')
         });
 
         Route::resource('employee', AdminEmployeeController::class);
+
+        Route::resource('schedule', ScheduleController::class);
     });

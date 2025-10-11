@@ -1,5 +1,5 @@
 {{-- Navbar --}}
-<header class="flex items-center justify-between px-6 py-3 bg-white shadow-sm">
+<header class="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
     {{-- Left side --}}
     <button
         class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition cursor-pointer">
