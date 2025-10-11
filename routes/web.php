@@ -36,5 +36,5 @@ Route::prefix('admin')->name('admin.')
 
         Route::resource('employee', AdminEmployeeController::class);
 
-        Route::resource('schedule', ScheduleController::class);
+        Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule.index');
     });

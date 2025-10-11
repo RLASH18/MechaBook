@@ -12,11 +12,17 @@ class EmployeeIndex extends Component
 
     public $search = '';
 
+    /**
+     * Resets pagination when the search input is updated
+     */
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
+    /**
+     * Render the component view
+     */
     public function render()
     {
         // Fetch employees filtered by search term and ordered by newest
