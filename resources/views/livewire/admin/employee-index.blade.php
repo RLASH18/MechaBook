@@ -69,7 +69,7 @@
 
                             {{-- Action --}}
                             <x-table.td class="items-center">
-                                <div class="flex justify-center items-center gap-4">
+                                <div class="flex items-center gap-4">
 
                                     {{-- Show Button --}}
                                     <x-icon-button href="{{ route('admin.employee.show', $employee->id) }}"
