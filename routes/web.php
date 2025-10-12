@@ -32,6 +32,7 @@ Route::prefix('admin')->name('admin.')
 
         Route::controller(AdminController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('dashboard');
+            Route::get('settings', 'settings')->name('settings');
             Route::post('logout', 'logout')->name('logout');
         });
 

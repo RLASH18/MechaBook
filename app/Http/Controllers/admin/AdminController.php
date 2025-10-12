@@ -19,6 +19,16 @@ class AdminController extends Controller
         return view('admin.dashboard', $data);
     }
 
+    public function settings()
+    {
+        $user = auth()->user();
+
+        return view('admin.settings', [
+            'title' => 'MechaBook | Admin - Settings',
+            'user' => $user
+        ]);
+    }
+
     public function logout()
     {
         return $this->logoutUser();

@@ -71,7 +71,7 @@
                 <label class="px-3 text-xs text-blue-200 uppercase dark:text-gray-400">Configuration</label>
 
                 {{-- Settings --}}
-                <a href="#"
+                <a wire:navigate href="{{ route('admin.settings') }}"
                     class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.settings') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
