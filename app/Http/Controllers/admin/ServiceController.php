@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\service\StoreServiceRequest;
 use App\Http\Requests\admin\service\UpdateServiceRequest;
 use App\Services\admin\ServiceManager;
-use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -43,13 +42,9 @@ class ServiceController extends Controller
     public function store(StoreServiceRequest $request)
     {
         $data = $request->validated();
+        $image = $request->hasFile('service_img') ? $request->file('service_img') : null;
 
-        // Upload service image if provided
-        if ($request->hasFile('service_img')) {
-            $data['service_img'] = $this->uploadImage($request->file('service_img'));
-        }
-
-        $this->serviceManager->createService($data);
+        $this->serviceManager->createService($data, $image);
         return $this->serviceSuccess('Service added successfully');
     }
 
@@ -91,19 +86,9 @@ class ServiceController extends Controller
     public function update(UpdateServiceRequest $request, string $id)
     {
         $data = $request->validated();
+        $image = $request->hasFile('service_img') ? $request->file('service_img') : null;
 
-        // Replace old image with new one if uploaded
-        if ($request->hasFile('service_img')) {
-            $oldService = $this->serviceManager->getServiceById((int) $id);
-
-            if ($oldService && $oldService->service_img) {
-                $this->deleteImage($oldService->service_img);
-            }
-
-            $data['service_img'] = $this->uploadImage($request->file('service_img'));
-        }
-
-        $service = $this->serviceManager->updateService((int) $id, $data);
+        $service = $this->serviceManager->updateService((int) $id, $data, $image);
         if (! $service) {
             return $this->serviceNotFound();
         }
@@ -116,17 +101,11 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
-        $service = $this->serviceManager->getServiceById((int) $id);
-        if (! $service) {
+        $deleted = $this->serviceManager->deleteService((int) $id);
+        if (! $deleted) {
             return $this->serviceNotFound();
         }
 
-        // Delete existing service image if present
-        if ($service->service_img) {
-            $this->deleteImage($service->service_img);
-        }
-
-        $this->serviceManager->deleteService((int) $id);
         return $this->serviceSuccess('Service deleted successfully');
     }
 
@@ -151,29 +130,5 @@ class ServiceController extends Controller
     {
         notyf()->error('Service not found!');
         return redirect()->route('admin.service.index');
-    }
-
-    /**
-     * Upload service image with custom filename.
-     *
-     * @param \Illuminate\Http\UploadedFile $file
-     * @return string
-     */
-    private function uploadImage($file): string
-    {
-        $extension = $file->getClientOriginalExtension();
-        $filename = 'service_img_' . time() . '_' . uniqid() . '.' . $extension;
-        return $file->storeAs('services', $filename, 'public');
-    }
-
-    /**
-     * Delete service image from storage.
-     *
-     * @param string $path
-     * @return bool
-     */
-    private function deleteImage(string $path): bool
-    {
-        return Storage::disk('public')->delete($path);
     }
 }
