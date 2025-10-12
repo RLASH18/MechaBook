@@ -20,9 +20,6 @@ class EmployeeIndex extends Component
         $this->resetPage();
     }
 
-    /**
-     * Render the component view
-     */
     public function render()
     {
         // Fetch employees filtered by search term and ordered by newest

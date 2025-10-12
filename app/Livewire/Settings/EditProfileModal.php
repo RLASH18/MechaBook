@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Settings;
 
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\settings\UpdateProfileRequest;
 use App\Services\SettingsService;
 use Livewire\Component;
 
@@ -16,10 +16,10 @@ class EditProfileModal extends Component
     public $email;
     public $phone;
 
-    protected $settingsService;
-
     // Listen for edit profile event
     protected $listeners = ['openEditProfileModal' => 'openModal'];
+
+    protected $settingsService;
 
     /**
      * Inject the settings service for handling business logic

@@ -24,13 +24,13 @@ class ScheduleForm extends Component
     // Days of week
     public $daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    protected $scheduleService;
-
     protected $listeners = [
         'openCreateModal',
         'openEditModal',
         'openDeleteModal',
     ];
+
+    protected $scheduleService;
 
     /**
      * Inject the schedule service for handling business logic
@@ -143,9 +143,6 @@ class ScheduleForm extends Component
         $this->dispatch('scheduleUpdated');
     }
 
-    /**
-     * Render the component view
-     */
     public function render()
     {
         return view('livewire.admin.schedule.schedule-form');

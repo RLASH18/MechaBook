@@ -15,9 +15,6 @@ class ScheduleIndex extends Component
     // Refreshes the component when a schedule is updated
     protected $listeners = ['scheduleUpdated' => '$refresh'];
 
-    /**
-     * Render the component view
-     */
     public function render()
     {
         // Fetch all employees with their schedules (ordered by weekday),

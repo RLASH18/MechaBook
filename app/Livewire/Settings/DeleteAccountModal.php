@@ -16,9 +16,10 @@ class DeleteAccountModal extends Component
     // Form field
     public $password;
 
-    protected $settingsService;
-
+    // Listen for delete account event
     protected $listeners = ['openDeleteAccountModal' => 'openModal'];
+
+    protected $settingsService;
 
     /**
      * Inject the settings service for handling business logic

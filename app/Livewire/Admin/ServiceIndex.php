@@ -14,6 +14,7 @@ class ServiceIndex extends Component
 
     public function render()
     {
+        // Fetch services with search and pagination
         $services = Service::when($this->search, function($query) {
             $query->where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('description', 'like', '%' . $this->search . '%');

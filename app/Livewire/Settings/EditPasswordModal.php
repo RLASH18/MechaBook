@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Settings;
 
-use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\settings\UpdatePasswordRequest;
 use App\Services\SettingsService;
 use Livewire\Component;
 
@@ -16,10 +16,10 @@ class EditPasswordModal extends Component
     public $new_password;
     public $new_password_confirmation;
 
-    protected $settingsService;
-
     // Listen for edit password event
     protected $listeners = ['openEditPasswordModal' => 'openModal'];
+
+    protected $settingsService;
 
     /**
      * Inject the settings service for handling business logic
