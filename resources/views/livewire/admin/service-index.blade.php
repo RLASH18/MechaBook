@@ -8,7 +8,7 @@
             <x-table.table>
 
                 {{-- Head --}}
-                <x-table.thead :headers="['Service ID', 'Name', 'Category', 'Price', 'Action']" />
+                <x-table.thead :headers="['Service ID', 'Service Name', 'Category', 'Price', 'Action']" />
 
                 {{-- Body --}}
                 <x-table.tbody>
@@ -25,10 +25,27 @@
                             <x-table.td class="text-small">{{ $service->name }}</x-table.td>
 
                             {{-- Category --}}
-                            <x-table.td class="text-small">{{ $service->category }}</x-table.td>
+                            <x-table.td>
+                                @php
+                                    $categoryColors = [
+                                        'Repair' => 'bg-blue-100 text-blue-800',
+                                        'Maintenance' => 'bg-green-100 text-green-800',
+                                        'Upgrade' => 'bg-purple-100 text-purple-800',
+                                        'Inspection' => 'bg-yellow-100 text-yellow-800',
+                                        'Customization' => 'bg-pink-100 text-pink-800',
+                                        'Installation' => 'bg-orange-100 text-orange-800',
+                                    ];
+                                    $colorClass = $categoryColors[$service->category] ?? 'bg-gray-100 text-gray-800';
+                                @endphp
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $colorClass }}">
+                                    {{ $service->category }}
+                                </span>
+                            </x-table.td>
 
                             {{-- Price --}}
-                            <x-table.td class="text-small">{{ $service->price }}</x-table.td>
+                            <x-table.td class="text-small text-green-600 font-semibold">
+                                ₱{{ number_format($service->price, 2) }}
+                            </x-table.td>
 
                             {{-- Action --}}
                             <x-table.td class="items-center">
