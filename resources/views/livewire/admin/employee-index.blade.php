@@ -14,25 +14,6 @@
                 <x-table.tbody>
                     @forelse ($employees as $employee)
                         <tr>
-                            @php
-                                // Split name and get initials
-                                $nameParts = explode(' ', $employee->name);
-                                $firstName = $nameParts[0] ?? '';
-                                $lastName = end($nameParts) ?? '';
-                                $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1));
-
-                                // Determine status - handle null last_active_at
-                                $lastActive = $employee->last_active_at ?? $employee->created_at;
-                                $daysInactive = now()->diffInDays($lastActive);
-                                if ($daysInactive < 1) {
-                                    $status = ['label' => 'Active', 'bg' => 'bg-green-50', 'text' => 'text-green-600'];
-                                } elseif ($daysInactive <= 5) {
-                                    $status = ['label' => 'Idle', 'bg' => 'bg-yellow-50', 'text' => 'text-yellow-600'];
-                                } else {
-                                    $status = ['label' => 'Inactive', 'bg' => 'bg-red-50', 'text' => 'text-red-600'];
-                                }
-                            @endphp
-
                             {{-- Employee ID --}}
                             <x-table.td>
                                 <span class="font-medium text-gray-700 text-sm">
@@ -42,6 +23,13 @@
 
                             {{-- Name --}}
                             <x-table.td>
+                                @php
+                                    // Split name and get initials
+                                    $nameParts = explode(' ', $employee->name);
+                                    $firstName = $nameParts[0] ?? '';
+                                    $lastName = end($nameParts) ?? '';
+                                    $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1));
+                                @endphp
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -61,8 +49,31 @@
 
                             {{-- Status --}}
                             <x-table.td>
-                                <span
-                                    class="rounded-full px-2 py-0.5 text-xs font-medium {{ $status['bg'] }} {{ $status['text'] }}">
+                                @php
+                                    // Determine status - handle null last_active_at
+                                    $lastActive = $employee->last_active_at ?? $employee->created_at;
+                                    $daysInactive = now()->diffInDays($lastActive);
+                                    if ($daysInactive < 1) {
+                                        $status = [
+                                            'label' => 'Active',
+                                            'bg' => 'bg-green-50',
+                                            'text' => 'text-green-600',
+                                        ];
+                                    } elseif ($daysInactive <= 5) {
+                                        $status = [
+                                            'label' => 'Idle',
+                                            'bg' => 'bg-yellow-50',
+                                            'text' => 'text-yellow-600',
+                                        ];
+                                    } else {
+                                        $status = [
+                                            'label' => 'Inactive',
+                                            'bg' => 'bg-red-50',
+                                            'text' => 'text-red-600',
+                                        ];
+                                    }
+                                @endphp
+                                <span class="rounded-full px-2 py-0.5 text-xs font-medium {{ $status['bg'] }} {{ $status['text'] }}">
                                     {{ $status['label'] }}
                                 </span>
                             </x-table.td>
