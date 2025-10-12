@@ -5,16 +5,16 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\employee\StoreEmployeeRequest;
 use App\Http\Requests\admin\employee\UpdateEmployeeRequest;
-use App\Services\admin\EmployeeServices;
+use App\Services\admin\EmployeeService;
 use Illuminate\Http\RedirectResponse;
 
 class EmployeeController extends Controller
 {
     /**
-     * EmployeeServices dependency injection.
+     * EmployeeService dependency injection.
      */
     public function __construct(
-        protected EmployeeServices $employeeService
+        protected EmployeeService $employeeService
     ) {}
 
     /**

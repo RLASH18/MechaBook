@@ -5,7 +5,7 @@ namespace App\Services\admin;
 use App\Interfaces\admin\EmployeeInterface;
 use App\UserRole;
 
-class EmployeeServices
+class EmployeeService
 {
     /**
      * Inject the EmployeeInterface (Repository).
