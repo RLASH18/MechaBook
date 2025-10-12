@@ -93,24 +93,24 @@
 
                     <div class="mt-8">
                         {{-- Session Messages --}}
-                        @if (session('success'))
+                        @if (session('auth_success'))
                             <div class="mt-4 flex items-center p-3 text-sm text-green-700 bg-green-100 rounded-lg shadow-sm">
                                 <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span>{{ session('success') }}</span>
+                                <span>{{ session('auth_success') }}</span>
                             </div>
                         @endif
-                        @if (session('error'))
+                        @if (session('auth_error'))
                             <div class="mt-4 flex items-center p-3 text-sm text-red-700 bg-red-100 rounded-lg shadow-sm">
                                 <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                <span>{{ session('error') }}</span>
+                                <span>{{ session('auth_error') }}</span>
                             </div>
                         @endif
 

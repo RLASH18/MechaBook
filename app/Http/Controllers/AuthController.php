@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Display the signin form.
+     */
     public function showSigninForm()
     {
         return view('signin', [
@@ -15,6 +18,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Handle user signin authentication.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function signin(Request $request)
     {
         $credentials = $request->validate([
@@ -25,17 +34,20 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Redirect based on role
-            return match(Auth::user()->role) {
+            // Redirect based on user role
+            return match (Auth::user()->role) {
                 UserRole::Admin => redirect()->route('admin.dashboard'),
                 UserRole::Employee => redirect()->route('employee.dashboard'),
                 UserRole::Customer => redirect()->route('customer.dashboard')
             };
         }
 
-        return back()->with('error', 'Invalid email or password.');
+        return back()->with('auth_error', 'Invalid email or password.');
     }
 
+    /**
+     * Display the signup form.
+     */
     public function showSignupForm()
     {
         return view('signup', [
@@ -43,8 +55,14 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Handle user signup registration.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function signup(Request $request)
     {
-
+        //
     }
 }
