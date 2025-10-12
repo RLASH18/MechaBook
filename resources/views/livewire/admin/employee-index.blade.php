@@ -43,8 +43,9 @@
                             {{-- Name --}}
                             <x-table.td>
                                 <div class="flex items-center gap-3">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
-                                        <span class="text-xs font-semibold text-blue-600">{{ $initials }}</span>
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white font-semibold text-xs">{{ $initials }}</span>
                                     </div>
                                     <div>
                                         <p class="font-medium text-gray-700 text-sm">{{ $firstName }}</p>

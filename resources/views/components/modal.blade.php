@@ -3,20 +3,16 @@
 @if ($show)
     {{-- Modal wrapper - positioned to account for sidebar --}}
     <div class="fixed inset-0 z-50 flex" role="dialog" aria-modal="true">
-        {{-- Spacer for sidebar (256px = w-64) --}}
         <div class="w-64 flex-shrink-0"></div>
 
         {{-- Main content overlay area --}}
         <div class="flex-1 flex flex-col">
-            {{-- Spacer for navbar (approximate height) --}}
             <div class="h-16 flex-shrink-0"></div>
 
             {{-- Overlay that only covers main content --}}
             <div class="flex-1 relative">
-                {{-- Blurred backdrop only (no dark overlay) --}}
-                <div class="absolute inset-0 backdrop-blur-sm transition-opacity"
-                     wire:click="closeModal"
-                     aria-hidden="true"></div>
+                <div class="absolute inset-0 bg-black/15 backdrop-blur-md transition-opacity" wire:click="closeModal"
+                    aria-hidden="true"></div>
 
                 {{-- Modal centered in main content area --}}
                 <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
