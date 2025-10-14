@@ -60,7 +60,8 @@
                         <x-form.label for="duration_minutes">Duration (minutes) <span
                                 class="text-red-500">*</span></x-form.label>
                         <x-form.input id="duration_minutes" name="duration_minutes" type="number" min="1"
-                            step="1" placeholder="e.g., 30" value="{{ $service->duration_minutes ?? old('duration_minutes') }}" />
+                            step="1" placeholder="e.g., 30"
+                            value="{{ $service->duration_minutes ?? old('duration_minutes') }}" />
                         <x-form.error name="duration_minutes" />
                     </div>
                 </div>
@@ -83,10 +84,12 @@
                     <x-form.label for="service_img">Service Image</x-form.label>
                     <div class="mt-2">
                         {{-- Current Image Display --}}
-                        @if($service->service_img)
+                        @if ($service->service_img)
                             <div id="currentImageContainer" class="mb-4">
-                                <div class="relative w-full aspect-square rounded-lg overflow-hidden border-2 border-gray-300 bg-gray-50">
-                                    <img id="currentImage" src="{{ asset('storage/' . $service->service_img) }}" alt="Current service image" class="w-full h-full object-cover">
+                                <div
+                                    class="relative w-full aspect-square rounded-lg overflow-hidden border-2 border-gray-300 bg-gray-50">
+                                    <img id="currentImage" src="{{ asset('storage/' . $service->service_img) }}"
+                                        alt="Current service image" class="w-full h-full object-cover">
                                     <button type="button" onclick="removeCurrentImage()"
                                         class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +104,8 @@
 
                         {{-- Image Preview --}}
                         <div id="imagePreviewContainer" class="hidden mb-4">
-                            <div class="relative w-full aspect-square rounded-lg overflow-hidden border-2 border-gray-300 bg-gray-50">
+                            <div
+                                class="relative w-full aspect-square rounded-lg overflow-hidden border-2 border-gray-300 bg-gray-50">
                                 <img id="imagePreview" src="" alt="Preview" class="w-full h-full object-cover">
                                 <button type="button" onclick="clearImage()"
                                     class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg">
@@ -117,7 +121,8 @@
                         <label for="service_img" id="uploadLabel"
                             class="flex flex-col items-center justify-center w-full aspect-square border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-blue-500 transition-all duration-200 {{ $service->service_img ? 'hidden' : '' }}">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-12 h-12 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-12 h-12 mb-3 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                 </svg>
@@ -145,7 +150,9 @@
             </x-form.button>
         </div>
     </x-form.container>
+@endsection
 
+@push('scripts')
     {{-- Image Preview Script --}}
     <script>
         function previewImage(event) {
@@ -193,4 +200,4 @@
             document.getElementById('uploadLabel').classList.remove('hidden');
         }
     </script>
-@endsection
+@endpush
