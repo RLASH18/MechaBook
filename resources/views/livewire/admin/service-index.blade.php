@@ -22,7 +22,12 @@
                             </x-table.td>
 
                             {{-- Name --}}
-                            <x-table.td class="text-small">{{ $service->name }}</x-table.td>
+                            <x-table.td>
+                                <p class="font-medium text-gray-900 text-sm mb-1 truncate max-w-[150px]"
+                                    title="{{ $service->name }}">
+                                    {{ $service->name }}
+                                </p>
+                            </x-table.td>
 
                             {{-- Category --}}
                             <x-table.td>
