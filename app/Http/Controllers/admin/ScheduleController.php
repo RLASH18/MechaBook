@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 class ScheduleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the admin schedule management page.
      */
     public function index()
     {
