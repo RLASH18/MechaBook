@@ -12,8 +12,18 @@ class ScheduleIndex extends Component
 
     public $search = '';
 
+    protected $queryString = ['search'];
+
     // Refreshes the component when a schedule is updated
     protected $listeners = ['scheduleUpdated' => '$refresh'];
+
+    /**
+     * Resets pagination when the search input is updated
+     */
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {

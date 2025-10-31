@@ -12,15 +12,25 @@ class ServiceIndex extends Component
 
     public $search = '';
 
+    protected $queryString = ['search'];
+
+    /**
+     * Resets pagination when the search input is updated
+     */
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         // Fetch services with search and pagination
-        $services = Service::when($this->search, function($query) {
+        $services = Service::when($this->search, function ($query) {
             $query->where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('description', 'like', '%' . $this->search . '%');
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('livewire.admin.service-index', [
             'services' => $services

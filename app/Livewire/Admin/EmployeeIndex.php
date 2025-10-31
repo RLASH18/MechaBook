@@ -12,6 +12,8 @@ class EmployeeIndex extends Component
 
     public $search = '';
 
+    protected $queryString = ['search'];
+
     /**
      * Resets pagination when the search input is updated
      */
