@@ -61,4 +61,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmployeeSchedule::class, 'employee_id');
     }
+
+    /**
+     * Get all of the customer appointments for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function customerAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'customer_id');
+    }
+
+    /**
+     * Get all of the employee ppointmens for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function employeeAppointmens(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'employee_id');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\AppointmentController;
 use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\admin\ScheduleController;
 use App\Http\Controllers\admin\ServiceController;
@@ -41,4 +42,6 @@ Route::prefix('admin')->name('admin.')
         Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule.index');
 
         Route::resource('service', ServiceController::class);
+
+        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
     });
