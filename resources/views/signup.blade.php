@@ -28,7 +28,7 @@
         {{-- Password Confirmation Field --}}
         <div class="mt-4">
             <x-form.label for="password_confirmation">Confirm Password</x-form.label>
-            <x-form.input id="password_confirmation" name="password_confirmation" type="password_confirmation"
+            <x-form.input id="password_confirmation" name="password_confirmation" type="password"
                 placeholder="Enter your password again" />
             <x-form.error name="password_confirmation" />
         </div>
