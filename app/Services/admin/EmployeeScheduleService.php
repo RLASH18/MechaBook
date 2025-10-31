@@ -27,27 +27,6 @@ class EmployeeScheduleService
     }
 
     /**
-     * Get all schedules for a specific employee.
-     *
-     * @param int $employeeId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getEmployeeSchedules(int $employeeId)
-    {
-        return $this->scheduleInterface->getByEmployee($employeeId);
-    }
-
-    /**
-     * Get all schedules with employees grouped.
-     *
-     * @return mixed
-     */
-    public function getAllSchedulesWithEmployees()
-    {
-        return $this->scheduleInterface->getAllWithEmployees();
-    }
-
-    /**
      * Create a new schedule.
      *
      * @param array $data
