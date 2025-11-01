@@ -9,7 +9,7 @@
 <body>
     <div class="flex h-screen">
         {{-- Sidebar --}}
-        @include('partials.admin.sidebar')
+        @includeIf('partials.' . auth()->user()->role->value . '.sidebar')
 
         {{-- Main Content Area --}}
         <div class="flex flex-col flex-1">

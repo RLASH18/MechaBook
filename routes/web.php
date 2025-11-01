@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\employee\EmployeeController as EmployeeMainController;
 use App\Http\Controllers\admin\AppointmentController;
 use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\admin\ScheduleController;
@@ -44,4 +45,18 @@ Route::prefix('admin')->name('admin.')
         Route::resource('service', ServiceController::class);
 
         Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
+    });
+
+/**
+ * Employee Route
+ */
+Route::prefix('employee')->name('employee.')
+    ->middleware(['auth', 'role:employee'])
+    ->group(function () {
+
+        Route::controller(EmployeeMainController::class)->group(function () {
+            Route::get('dashboard', 'dashboard')->name('dashboard');
+            Route::get('settings', 'settings')->name('settings');
+            Route::post('logout', 'logout')->name('logout');
+        });
     });
