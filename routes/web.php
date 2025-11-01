@@ -4,9 +4,11 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\employee\EmployeeController as EmployeeMainController;
 use App\Http\Controllers\admin\AppointmentController;
 use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
-use App\Http\Controllers\admin\ScheduleController;
+use App\Http\Controllers\admin\ScheduleController as AdminScheduleController;
 use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\employee\ScheduleController as EmployeeScheduleController;
+use App\Http\Controllers\employee\AppointmentController as EmployeeAppointmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,7 +42,7 @@ Route::prefix('admin')->name('admin.')
 
         Route::resource('employee', AdminEmployeeController::class);
 
-        Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
 
         Route::resource('service', ServiceController::class);
 
@@ -59,4 +61,8 @@ Route::prefix('employee')->name('employee.')
             Route::get('settings', 'settings')->name('settings');
             Route::post('logout', 'logout')->name('logout');
         });
+
+        Route::resource('schedule', EmployeeScheduleController::class);
+
+        Route::resource('appointment', EmployeeAppointmentController::class);
     });
