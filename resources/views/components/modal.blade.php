@@ -22,6 +22,9 @@
                         'max-w-lg' => $maxWidth === 'lg',
                         'max-w-xl' => $maxWidth === 'xl',
                         'max-w-2xl' => $maxWidth === '2xl',
+                        'max-w-3xl' => $maxWidth === '3xl',
+                        'max-w-4xl' => $maxWidth === '4xl',
+                        'max-w-5xl' => $maxWidth === '5xl',
                     ])>
                         <div class="px-6 pt-5 pb-4">
                             {{-- Header --}}
