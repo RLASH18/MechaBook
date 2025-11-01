@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function showSigninForm()
     {
-        return view('signin', [
+        return view('pages.signin', [
             'title' => 'MechaBook | Signin'
         ]);
     }
@@ -51,7 +51,7 @@ class AuthController extends Controller
      */
     public function showSignupForm()
     {
-        return view('signup', [
+        return view('pages.signup', [
             'title' => 'MechaBook | Signup'
         ]);
     }

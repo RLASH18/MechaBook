@@ -22,7 +22,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('admin.employees.index', [
+        return view('pages.admin.employees.index', [
             'title' => 'MechaBook | Admin - Employee Management'
         ]);
     }
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('admin.employees.create', [
+        return view('pages.admin.employees.create', [
             'title' => 'MechaBook | Admin - New Employee'
         ]);
     }
@@ -56,7 +56,7 @@ class EmployeeController extends Controller
             return $this->employeeNotFound();
         }
 
-        return view('admin.employees.show', [
+        return view('pages.admin.employees.show', [
             'title' => 'MechaBook | Admin - View Employee',
             'employee' => $employee
         ]);
@@ -72,7 +72,7 @@ class EmployeeController extends Controller
             return $this->employeeNotFound();
         }
 
-        return view('admin.employees.update', [
+        return view('pages.admin.employees.update', [
             'title' => 'MechaBook | Admin - Edit Employee',
             'employee' => $employee
         ]);

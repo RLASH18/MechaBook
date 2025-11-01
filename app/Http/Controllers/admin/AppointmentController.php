@@ -12,7 +12,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return view('admin.appointments', [
+        return view('pages.admin.appointments', [
             'title' => 'MechaBook | Admin - Appointment Management'
         ]);
     }

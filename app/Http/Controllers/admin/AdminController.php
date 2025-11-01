@@ -12,18 +12,16 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $data = [
+        return view('pages.admin.dashboard', [
             'title' => 'MechaBook | Admin - Dashboard'
-        ];
-
-        return view('admin.dashboard', $data);
+        ]);
     }
 
     public function settings()
     {
         $user = auth()->user();
 
-        return view('admin.settings', [
+        return view('pages.admin.settings', [
             'title' => 'MechaBook | Admin - Settings',
             'user' => $user
         ]);

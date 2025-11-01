@@ -21,7 +21,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('admin.services.index', [
+        return view('pages.admin.services.index', [
             'title' => 'MechaBook | Admin - Services Management'
         ]);
     }
@@ -31,7 +31,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('admin.services.create', [
+        return view('pages.admin.services.create', [
             'title' => 'MechaBook | Admin - New Service'
         ]);
     }
@@ -58,7 +58,7 @@ class ServiceController extends Controller
             return $this->serviceNotFound();
         }
 
-        return view('admin.services.show', [
+        return view('pages.admin.services.show', [
             'title' => 'MechaBook | Admin - View Service',
             'service' => $service
         ]);
@@ -74,7 +74,7 @@ class ServiceController extends Controller
             return $this->serviceNotFound();
         }
 
-        return view('admin.services.update', [
+        return view('pages.admin.services.update', [
             'title' => 'MechaBook | Admin - Edit Service',
             'service' => $service
         ]);
