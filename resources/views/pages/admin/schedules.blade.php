@@ -1,4 +1,4 @@
-@extends('layouts.admin-layout')
+@extends('layouts.app')
 @section('main')
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">

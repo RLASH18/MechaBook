@@ -1,4 +1,4 @@
-@extends('layouts.admin-layout')
+@extends('layouts.app')
 @section('main')
     {{-- Page Header --}}
     <x-page-header title="Settings">
