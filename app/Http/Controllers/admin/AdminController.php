@@ -8,7 +8,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Traits\LogoutHandler;
 use App\UserRole;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -32,9 +32,9 @@ class AdminController extends Controller
 
     public function settings()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
-        return view('pages.admin.settings', [
+        return view('pages.settings', [
             'title' => 'MechaBook | Admin - Settings',
             'user' => $user
         ]);
