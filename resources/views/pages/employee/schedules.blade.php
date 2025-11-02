@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="space-y-2">
-                <button
+                <button onclick="Livewire.dispatch('openRequestChangeModal')"
                     class="w-full px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors flex items-center justify-between group">
                     <span class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +147,8 @@
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-600">Day</span>
-                        <span class="text-base font-semibold text-gray-900">{{ $daysOfWeek[$nextSchedule->day_of_week] }}</span>
+                        <span
+                            class="text-base font-semibold text-gray-900">{{ $daysOfWeek[$nextSchedule->day_of_week] }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-600">Time</span>
@@ -206,8 +207,8 @@
                         @if ($daySchedule)
                             <div class="space-y-2">
                                 <div class="flex items-center gap-2 text-sm">
-                                    <svg class="w-4 h-4 {{ $isToday ? 'text-blue-600' : 'text-gray-500' }}" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 {{ $isToday ? 'text-blue-600' : 'text-gray-500' }}"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -216,8 +217,8 @@
                                     </span>
                                 </div>
                                 <div class="flex items-center gap-2 text-sm">
-                                    <svg class="w-4 h-4 {{ $isToday ? 'text-blue-600' : 'text-gray-500' }}" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 {{ $isToday ? 'text-blue-600' : 'text-gray-500' }}"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -262,6 +263,6 @@
         @endif
     </div>
 
+    @livewire('employee.schedule.request-change-modal')
     @livewire('employee.schedule.calendar-modal')
-    {{-- @livewire('employee.schedule.calendar-modal') --}}
 @endsection
