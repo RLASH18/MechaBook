@@ -9,5 +9,4 @@ interface ScheduleChangeRequestInterface
 {
     public function getEmployeeRequests(int $employeeId): Collection;
     public function createRequest(array $data): ScheduleChangeRequest;
-    public function getPendingRequests(int $employeeId): Collection;
 }

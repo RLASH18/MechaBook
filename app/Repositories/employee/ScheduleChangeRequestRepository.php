@@ -14,10 +14,11 @@ class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
      * @param int $employeeId
      * @return Collection
      */
-    public function getEmployeeRequests(int $employeeId): Collection
+    public function getEmployeeRequests(int $employeeId, int $limit = 5): Collection
     {
         return ScheduleChangeRequest::where('employee_id', $employeeId)
             ->orderBy('created_at', 'desc')
+            ->limit($limit)
             ->get();
     }
 
@@ -30,19 +31,5 @@ class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
     public function createRequest(array $data): ScheduleChangeRequest
     {
         return ScheduleChangeRequest::create($data);
-    }
-
-    /**
-     * Get pending requests for a specific employee
-     *
-     * @param int $employeeId
-     * @return Collection
-     */
-    public function getPendingRequests(int $employeeId): Collection
-    {
-        return ScheduleChangeRequest::where('employee_id', $employeeId)
-            ->where('status', 'pending')
-            ->orderBy('created_at', 'desc')
-            ->get();
     }
 }

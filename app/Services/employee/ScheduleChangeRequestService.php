@@ -23,9 +23,9 @@ class ScheduleChangeRequestService
      * @param int $employeeId
      * @return Collection
      */
-    public function getEmployeeRequests(int $employeeId): Collection
+    public function getEmployeeRequests(int $employeeId, int $limit = 5): Collection
     {
-        return $this->scheduleChangeRequestInterface->getEmployeeRequests($employeeId);
+        return $this->scheduleChangeRequestInterface->getEmployeeRequests($employeeId, $limit);
     }
 
     /**
@@ -37,16 +37,5 @@ class ScheduleChangeRequestService
     public function createRequest(array $data): ScheduleChangeRequest
     {
         return $this->scheduleChangeRequestInterface->createRequest($data);
-    }
-
-    /**
-     * Get pending requests for a specific employee
-     *
-     * @param int $employeeId
-     * @return Collection
-     */
-    public function getPendingRequests(int $employeeId): Collection
-    {
-        return $this->scheduleChangeRequestInterface->getPendingRequests($employeeId);
     }
 }

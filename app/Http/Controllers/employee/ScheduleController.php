@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
+use App\Services\employee\ScheduleChangeRequestService;
 use App\Services\employee\ScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,12 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class ScheduleController extends Controller
 {
     /**
-     * Inject the ScheduleService
+     * Inject the services
      *
      * @param ScheduleService $scheduleService
+     * @param ScheduleChangeRequestService $requestService
      */
     public function __construct(
-        protected ScheduleService $scheduleService
+        protected ScheduleService $scheduleService,
+        protected ScheduleChangeRequestService $requestService
     ) {}
 
     /**
@@ -50,6 +53,9 @@ class ScheduleController extends Controller
             'Sun' => 'Sunday'
         ];
 
+        // Get employee's schedule change requests
+        $requests = $this->requestService->getEmployeeRequests($user->id);
+
         return view('pages.employee.schedules', [
             'title' => 'MechaBook | Employee - Schedules',
             'currentDay' => $currentDay,
@@ -58,7 +64,8 @@ class ScheduleController extends Controller
             'nextSchedule' => $nextSchedule,
             'totalHours' => $totalHours,
             'averageHours' => $averageHours,
-            'daysOfWeek' => $daysOfWeek
+            'daysOfWeek' => $daysOfWeek,
+            'requests' => $requests
         ]);
     }
 }

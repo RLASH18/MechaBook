@@ -263,6 +263,105 @@
         @endif
     </div>
 
+    {{-- Request History Section --}}
+    @if ($requests->count() > 0)
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 mt-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900">Recent Requests</h3>
+                <span class="text-sm text-gray-500">Last 5 requests</span>
+            </div>
+
+            <div class="space-y-4">
+                @foreach ($requests as $request)
+                    <div
+                        class="p-4 rounded-lg border {{ $request->status === 'pending'
+                            ? 'border-yellow-200 bg-yellow-50'
+                            : ($request->status === 'approved'
+                                ? 'border-green-200 bg-green-50'
+                                : 'border-red-200 bg-red-50') }}">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium rounded-full {{ $request->status === 'pending'
+                                            ? 'bg-yellow-100 text-yellow-800'
+                                            : ($request->status === 'approved'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-red-100 text-red-800') }}">
+                                        {{ ucfirst($request->status) }}
+                                    </span>
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                        @if ($request->request_type === 'time_change')
+                                            Time Change
+                                        @elseif($request->request_type === 'day_change')
+                                            Day Change
+                                        @else
+                                            Day Off
+                                        @endif
+                                    </span>
+                                </div>
+
+                                <div class="text-sm space-y-1">
+                                    <div>
+                                        <span class="font-medium text-gray-700">From:</span>
+                                        <span class="text-gray-600">
+                                            {{ $request->current_day_of_week }}
+                                            @if ($request->current_start_time)
+                                                ({{ date('g:i A', strtotime($request->current_start_time)) }} -
+                                                {{ date('g:i A', strtotime($request->current_end_time)) }})
+                                            @endif
+                                        </span>
+                                    </div>
+
+                                    @if ($request->request_type !== 'day_off')
+                                        <div>
+                                            <span class="font-medium text-gray-700">To:</span>
+                                            <span class="text-gray-600">
+                                                @if ($request->request_type === 'time_change')
+                                                    {{ $request->current_day_of_week }}
+                                                    ({{ date('g:i A', strtotime($request->requested_start_time)) }} -
+                                                    {{ date('g:i A', strtotime($request->requested_end_time)) }})
+                                                @else
+                                                    {{ $request->requested_day_of_week }} (Same time)
+                                                @endif
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">{{ $request->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+
+                        {{-- Admin Notes (if reviewed) --}}
+                        @if ($request->admin_notes && $request->status !== 'pending')
+                            <div
+                                class="mt-3 pt-3 border-t {{ $request->status === 'approved' ? 'border-green-200' : 'border-red-200' }}">
+                                <div class="flex items-start gap-2">
+                                    <svg class="w-4 h-4 mt-0.5 {{ $request->status === 'approved' ? 'text-green-600' : 'text-red-600' }}"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <div class="flex-1">
+                                        <p
+                                            class="text-xs font-medium {{ $request->status === 'approved' ? 'text-green-800' : 'text-red-800' }} mb-1">
+                                            Admin Response:</p>
+                                        <p
+                                            class="text-sm {{ $request->status === 'approved' ? 'text-green-700' : 'text-red-700' }}">
+                                            {{ $request->admin_notes }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     @livewire('employee.schedule.request-change-modal')
     @livewire('employee.schedule.calendar-modal')
 @endsection
