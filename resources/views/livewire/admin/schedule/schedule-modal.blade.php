@@ -4,7 +4,7 @@
         <form wire:submit.prevent="createSchedule" class="space-y-4">
             {{-- Day of Week --}}
             <div>
-                <x-form.label for="day_of_week">Day of Week</x-form.label>
+                <x-form.label for="day_of_week">Day of Week <span class="text-red-500">*</x-form.label>
                 <x-form.select name="day_of_week" wire:model="day_of_week">
                     <option value="">Select Day</option>
                     @foreach ($daysOfWeek as $day)
@@ -16,14 +16,14 @@
 
             {{-- Start Time --}}
             <div>
-                <x-form.label for="start_time">Start Time</x-form.label>
+                <x-form.label for="start_time">Start Time <span class="text-red-500">*</x-form.label>
                 <x-form.input type="time" name="start_time" wire:model="start_time" />
                 <x-form.error name="start_time" />
             </div>
 
             {{-- End Time --}}
             <div>
-                <x-form.label for="end_time">End Time</x-form.label>
+                <x-form.label for="end_time">End Time <span class="text-red-500">*</x-form.label>
                 <x-form.input type="time" name="end_time" wire:model="end_time" />
                 <x-form.error name="end_time" />
             </div>
@@ -47,7 +47,7 @@
         <form wire:submit.prevent="updateSchedule" class="space-y-4">
             {{-- Day of Week --}}
             <div>
-                <x-form.label for="day_of_week">Day of Week</x-form.label>
+                <x-form.label for="day_of_week">Day of Week <span class="text-red-500">*</x-form.label>
                 <x-form.select name="day_of_week" wire:model="day_of_week">
                     <option value="">Select Day</option>
                     @foreach ($daysOfWeek as $day)
@@ -59,14 +59,14 @@
 
             {{-- Start Time --}}
             <div>
-                <x-form.label for="start_time">Start Time</x-form.label>
+                <x-form.label for="start_time">Start Time <span class="text-red-500">*</x-form.label>
                 <x-form.input type="time" name="start_time" wire:model="start_time" />
                 <x-form.error name="start_time" />
             </div>
 
             {{-- End Time --}}
             <div>
-                <x-form.label for="end_time">End Time</x-form.label>
+                <x-form.label for="end_time">End Time <span class="text-red-500">*</x-form.label>
                 <x-form.input type="time" name="end_time" wire:model="end_time" />
                 <x-form.error name="end_time" />
             </div>

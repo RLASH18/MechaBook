@@ -7,7 +7,7 @@ use App\Http\Requests\admin\schedule\UpdateScheduleRequest;
 use App\Services\admin\EmployeeScheduleService;
 use Livewire\Component;
 
-class ScheduleForm extends Component
+class ScheduleModal extends Component
 {
     // Modal States
     public $showCreateModal = false;
@@ -145,6 +145,6 @@ class ScheduleForm extends Component
 
     public function render()
     {
-        return view('livewire.admin.schedule.schedule-form');
+        return view('livewire.admin.schedule.schedule-modal');
     }
 }
