@@ -81,4 +81,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class, 'employee_id');
     }
+
+    /**
+     * Get all schedule change requests made by the employee.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scheduleChangeRequests(): HasMany
+    {
+        return $this->hasMany(ScheduleChangeRequest::class, 'employee_id');
+    }
+
+    /**
+     * Get all schedule change requests reviewed by the admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviewedScheduleChangeRequests(): HasMany
+    {
+        return $this->hasMany(ScheduleChangeRequest::class, 'reviewed_by');
+    }
 }
