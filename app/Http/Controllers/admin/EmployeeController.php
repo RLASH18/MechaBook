@@ -52,7 +52,7 @@ class EmployeeController extends Controller
     public function show(string $id)
     {
         $employee = $this->employeeService->getEmployeeById((int) $id);
-        if (!$employee) {
+        if (! $employee) {
             return $this->employeeNotFound();
         }
 
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         $employee = $this->employeeService->getEmployeeById((int) $id);
-        if (!$employee) {
+        if (! $employee) {
             return $this->employeeNotFound();
         }
 
@@ -84,7 +84,7 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, string $id)
     {
         $employee = $this->employeeService->updateEmployee((int) $id, $request->validated());
-        if (!$employee) {
+        if (! $employee) {
             return $this->employeeNotFound();
         }
 
@@ -97,7 +97,7 @@ class EmployeeController extends Controller
     public function destroy(string $id)
     {
         $employee = $this->employeeService->deleteEmployee((int) $id);
-        if (!$employee) {
+        if (! $employee) {
             return $this->employeeNotFound();
         }
 
