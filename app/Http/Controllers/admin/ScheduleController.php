@@ -11,7 +11,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.schedules', [
+        return view('pages.admin.schedules.index', [
             'title' => 'MechaBook | Admin - Schedule Management'
         ]);
     }
