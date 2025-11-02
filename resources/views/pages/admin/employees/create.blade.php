@@ -39,7 +39,7 @@
             <div class="space-y-6">
                 {{-- Full Name --}}
                 <div>
-                    <x-form.label for="name">Full Name</x-form.label>
+                    <x-form.label for="name">Full Name <span class="text-red-500">*</x-form.label>
                     <x-form.input id="name" name="name" type="text" placeholder="Enter employee's full name"
                         value="{{ old('name') }}" />
                     <x-form.error name="name" />
@@ -47,7 +47,7 @@
 
                 {{-- Email Address --}}
                 <div>
-                    <x-form.label for="email">Email Address</x-form.label>
+                    <x-form.label for="email">Email Address <span class="text-red-500">*</x-form.label>
                     <x-form.input id="email" name="email" type="email" placeholder="Enter email address"
                         value="{{ old('email') }}" />
                     <x-form.error name="email" />
@@ -66,7 +66,7 @@
             <div class="space-y-6">
                 {{-- Password --}}
                 <div>
-                    <x-form.label for="password">Password</x-form.label>
+                    <x-form.label for="password">Password <span class="text-red-500">*</x-form.label>
                     <x-form.input id="password" name="password" type="password" placeholder="Enter password" />
                     <x-form.error name="password" />
                     <p class="mt-1 text-sm text-gray-500">Password must be at least 8 characters long.</p>
@@ -74,7 +74,7 @@
 
                 {{-- Confirm Password --}}
                 <div>
-                    <x-form.label for="password_confirmation">Confirm Password</x-form.label>
+                    <x-form.label for="password_confirmation">Confirm Password <span class="text-red-500">*</x-form.label>
                     <x-form.input id="password_confirmation" name="password_confirmation" type="password"
                         placeholder="Confirm password" />
                     <x-form.error name="password_confirmation" />
