@@ -21,6 +21,8 @@ return new class extends Migration
             $table->time('end_time');
             $table->enum('status', ['pending', 'approved', 'rejected', 'cancelled', 'started', 'completed'])->default('pending');
             $table->text('notes')->nullable();
+            $table->string('started_proof_image')->nullable();
+            $table->string('completed_proof_image')->nullable();
             $table->timestamps();
         });
     }
