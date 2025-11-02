@@ -13,7 +13,7 @@
 @layer utilities {
     /* Force ALL pagination elements to be white */
     nav[role="navigation"] * {
-        background-color: white !important;
+        background-color: transparent !important;
         color: #2563eb !important;
         border-color: #d1d5db !important;
     }
