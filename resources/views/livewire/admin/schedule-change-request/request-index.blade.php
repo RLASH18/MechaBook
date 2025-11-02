@@ -142,6 +142,4 @@
     </div>
 
     <x-pagination :items="$requests" />
-
-    @livewire('admin.schedule-change-request.request-actions')
 </div>

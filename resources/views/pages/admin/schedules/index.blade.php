@@ -10,4 +10,5 @@
     </div>
 
     @livewire('admin.schedule.schedule-index')
+    @livewire('admin.schedule.schedule-modal')
 @endsection

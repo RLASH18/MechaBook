@@ -10,4 +10,5 @@
     </div>
 
     @livewire('admin.schedule-change-request.request-index')
+    @livewire('admin.schedule-change-request.request-actions')
 @endsection

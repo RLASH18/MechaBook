@@ -287,7 +287,4 @@
             <x-pagination :items="$appointments" />
         </div>
     </div>
-
-    {{-- Modals Component --}}
-    @livewire('admin.appointment.appointment-actions')
 </div>

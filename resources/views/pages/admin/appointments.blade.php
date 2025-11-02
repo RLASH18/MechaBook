@@ -9,4 +9,5 @@
     </div>
 
     @livewire('admin.appointment.appointment-index')
+    @livewire('admin.appointment.appointment-actions')
 @endsection

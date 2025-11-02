@@ -180,9 +180,5 @@
         @endforelse
     </div>
 
-    {{-- Pagination --}}
     <x-pagination :items="$employees" />
-
-    {{-- Modals --}}
-    @livewire('admin.schedule.schedule-modal')
 </div>

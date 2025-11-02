@@ -147,9 +147,6 @@ class CalendarModal extends Component
         }
     }
 
-
-
-
     public function render()
     {
         return view('livewire.employee.schedule.calendar-modal');
