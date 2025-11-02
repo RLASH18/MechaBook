@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\employee\EmployeeController as EmployeeMainController;
 use App\Http\Controllers\admin\AppointmentController;
 use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
+use App\Http\Controllers\admin\ScheduleChangeRequest;
 use App\Http\Controllers\admin\ScheduleController as AdminScheduleController;
 use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\AuthController;
@@ -43,6 +44,7 @@ Route::prefix('admin')->name('admin.')
         Route::resource('employee', AdminEmployeeController::class);
 
         Route::get('schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('schedule/requests', [ScheduleChangeRequest::class, 'index'])->name('schedule.requests');
 
         Route::resource('service', ServiceController::class);
 

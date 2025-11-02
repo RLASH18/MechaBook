@@ -1,4 +1,3 @@
-{{-- Sidebar --}}
 <aside class="flex flex-col w-64 px-5 py-8 overflow-y-auto bg-blue-600">
     {{-- Logo Section --}}
     <div class="flex items-center justify-center mb-2 -mt-4">
@@ -36,15 +35,46 @@
                     <span class="mx-2 text-sm font-medium">Employees</span>
                 </a>
 
-                {{-- Schedule --}}
-                <a wire:navigate href="{{ route('admin.schedule.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.schedule.index') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path
-                            d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z" />
-                    </svg>
-                    <span class="mx-2 text-sm font-medium">Schedules</span>
-                </a>
+                {{-- Schedule Dropdown --}}
+                <div x-data="{ open: {{ request()->routeIs('admin.schedule.*') ? 'true' : 'false' }} }">
+                    <button @click="open = !open" type="button"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.schedule.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-5 h-5">
+                                <path
+                                    d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z" />
+                            </svg>
+                            <span class="mx-2 text-sm font-medium">Schedules</span>
+                        </div>
+                        <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform duration-200"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-collapse class="ml-5 mt-2 space-y-2 border-l-2 border-blue-500/70 pl-3">
+                        <a wire:navigate href="{{ route('admin.schedule.index') }}"
+                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.index') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" class="w-4 h-4" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days">
+                                <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="M8 14h.01" />
+                                <path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" />
+                            </svg>
+                            <span class="ml-2">Manage Schedules</span>
+                        </a>
+                        <a wire:navigate href="{{ route('admin.schedule.requests') }}"
+                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.requests') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                <path d="M16 14v2.2l1.6 1" /><path d="M16 2v4" /><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                <path d="M3 10h5" /><path d="M8 2v4" /><circle cx="16" cy="16" r="6" />
+                            </svg>
+                            <span class="ml-2">Change Requests</span>
+                        </a>
+                    </div>
+                </div>
 
                 {{-- Service --}}
                 <a wire:navigate href="{{ route('admin.service.index') }}"
@@ -85,7 +115,8 @@
                     @csrf
                     <button type="submit"
                         class="flex items-center px-3 py-2 text-gray-300 rounded-lg w-full hover:bg-gray-400 hover:text-gray-900 transition-colors duration-300 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-5 h-5">
                             <path
                                 d="M4 18H6V20H18V4H6V6H4V3C4 2.44772 4.44772 2 5 2H19C19.5523 2 20 2.44772 20 3V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V18ZM6 11H13V13H6V16L1 12L6 8V11Z" />
                         </svg>
