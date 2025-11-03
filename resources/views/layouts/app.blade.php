@@ -12,7 +12,7 @@
         @includeIf('partials.' . auth()->user()->role->value . '.sidebar')
 
         {{-- Main Content Area --}}
-        <div class="flex flex-col flex-1">
+        <div class="flex flex-col flex-1 min-w-0">
 
             {{-- Navbar --}}
             @include('partials.navbar')

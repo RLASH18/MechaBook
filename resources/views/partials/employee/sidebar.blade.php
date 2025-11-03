@@ -1,5 +1,4 @@
-{{-- Sidebar --}}
-<aside class="flex flex-col w-64 px-5 py-8 overflow-y-auto bg-blue-600">
+<aside class="flex flex-col w-64 flex-shrink-0 px-5 py-8 overflow-y-auto bg-blue-600">
     {{-- Logo Section --}}
     <div class="flex items-center justify-center mb-2 -mt-4">
         <a wire:navigate href="{{ route('employee.dashboard') }}" class="block">
