@@ -4,6 +4,8 @@ namespace App\Repositories\shared;
 
 use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AppointmentRepository implements AppointmentInterface
@@ -89,6 +91,18 @@ class AppointmentRepository implements AppointmentInterface
             'rejected' => Appointment::where('status', 'rejected')->count(),
             'cancelled' => Appointment::where('status', 'cancelled')->count(),
         ];
+    }
+
+    /**
+     * Get all employees ordered by name for appointment assignment
+     *
+     * @return Collection
+     */
+    public function getAllEmployees(): Collection
+    {
+        return User::where('role', 'employee')
+            ->orderBy('name')
+            ->get();
     }
 
     /**

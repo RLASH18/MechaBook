@@ -160,9 +160,8 @@ class AppointmentActions extends Component
 
     public function render()
     {
-        $employees = User::where('role', UserRole::Employee)
-            ->orderBy('name')
-            ->get();
+        // Fetch employees using appointment service
+        $employees = $this->appointmentService->getAllEmployees();
 
         $appointment = null;
         if ($this->appointmentId) {

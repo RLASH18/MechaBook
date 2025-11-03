@@ -4,6 +4,7 @@ namespace App\Services\shared;
 
 use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AppointmentService
@@ -104,6 +105,16 @@ class AppointmentService
     public function getStatusCounts(): array
     {
         return $this->appointmentInterface->getStatusCounts();
+    }
+
+    /**
+     * Get all employees ordered by name for appointment assignment.
+     *
+     * @return Collection
+     */
+    public function getAllEmployees(): Collection
+    {
+        return $this->appointmentInterface->getAllEmployees();
     }
 
     /**
