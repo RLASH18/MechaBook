@@ -4,7 +4,7 @@ namespace App\Repositories\shared;
 
 use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AppointmentRepository implements AppointmentInterface
 {
@@ -46,19 +46,49 @@ class AppointmentRepository implements AppointmentInterface
     }
 
     /**
-     * Get all appointments for a specific employee
+     * Get all appointments paginated with search and status filters (Admin)
      *
-     * @param int $employeeId
-     * @return Collection
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
      */
-    public function getEmployeeAppointments(int $employeeId): Collection
+    public function getAllAppointmentsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
     {
-        return Appointment::where('employee_id', $employeeId)
-            ->with(['customer', 'service'])
-            ->whereIn('status', ['approved', 'started'])
-            ->orderBy('appointment_date', 'asc')
-            ->orderBy('start_time', 'asc')
-            ->get();
+        return Appointment::with(['customer', 'employee', 'service'])
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('customer', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('service', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($status && $status !== 'all', function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->orderBy('appointment_date', 'desc')
+            ->orderBy('start_time', 'desc')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Get status counts for all appointments (Admin)
+     *
+     * @return array
+     */
+    public function getStatusCounts(): array
+    {
+        return [
+            'all' => Appointment::count(),
+            'pending' => Appointment::where('status', 'pending')->count(),
+            'approved' => Appointment::where('status', 'approved')->count(),
+            'started' => Appointment::where('status', 'started')->count(),
+            'completed' => Appointment::where('status', 'completed')->count(),
+            'rejected' => Appointment::where('status', 'rejected')->count(),
+            'cancelled' => Appointment::where('status', 'cancelled')->count(),
+        ];
     }
 
     /**
@@ -97,5 +127,51 @@ class AppointmentRepository implements AppointmentInterface
         }
 
         return $appointment->update($updateData);
+    }
+
+    /**
+     * Get employee appointments paginated with search and status filters (Employee)
+     *
+     * @param int $employeeId
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getEmployeeAppointmentsPaginated(int $employeeId, ?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        return Appointment::with(['customer', 'service'])
+            ->where('employee_id', $employeeId)
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('customer', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('service', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($status && $status !== 'all', function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->orderBy('appointment_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Get status counts for employee appointments (Employee)
+     *
+     * @param int $employeeId
+     * @return array
+     */
+    public function getEmployeeStatusCounts(int $employeeId): array
+    {
+        return [
+            'all' => Appointment::where('employee_id', $employeeId)->count(),
+            'approved' => Appointment::where('employee_id', $employeeId)->where('status', 'approved')->count(),
+            'started' => Appointment::where('employee_id', $employeeId)->where('status', 'started')->count(),
+            'completed' => Appointment::where('employee_id', $employeeId)->where('status', 'completed')->count(),
+        ];
     }
 }

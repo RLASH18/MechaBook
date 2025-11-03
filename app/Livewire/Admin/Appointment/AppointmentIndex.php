@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Appointment;
 
-use App\Models\Appointment;
+use App\Services\shared\AppointmentService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +17,16 @@ class AppointmentIndex extends Component
 
     // Refreshes the component when an appointment is updated
     protected $listeners = ['appointmentUpdated' => '$refresh'];
+
+    protected $appointmentService;
+
+    /**
+     * Inject the appointment service
+     */
+    public function boot(AppointmentService $appointmentService)
+    {
+        $this->appointmentService = $appointmentService;
+    }
 
     /**
      * Resets pagination when the search input is updated
@@ -36,34 +46,15 @@ class AppointmentIndex extends Component
 
     public function render()
     {
-        // Fetch appointments with relationships and filters
-        $appointments = Appointment::with(['customer', 'employee', 'service'])
-            ->when($this->search, function ($query) {
-                $query->whereHas('customer', function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%');
-                })
-                ->orWhereHas('service', function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->status !== 'all', function ($query) {
-                $query->where('status', $this->status);
-            })
-            ->orderBy('appointment_date', 'desc')
-            ->orderBy('start_time', 'desc')
-            ->paginate(10);
+        // Fetch appointments using service
+        $appointments = $this->appointmentService->getAllAppointmentsPaginated(
+            $this->search,
+            $this->status,
+            10
+        );
 
-        // Get status counts for filter tabs
-        $statusCounts = [
-            'all' => Appointment::count(),
-            'pending' => Appointment::where('status', 'pending')->count(),
-            'approved' => Appointment::where('status', 'approved')->count(),
-            'started' => Appointment::where('status', 'started')->count(),
-            'completed' => Appointment::where('status', 'completed')->count(),
-            'rejected' => Appointment::where('status', 'rejected')->count(),
-            'cancelled' => Appointment::where('status', 'cancelled')->count(),
-        ];
+        // Get status counts using service
+        $statusCounts = $this->appointmentService->getStatusCounts();
 
         return view('livewire.admin.appointment.appointment-index', [
             'appointments' => $appointments,

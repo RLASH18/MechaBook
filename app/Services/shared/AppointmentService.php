@@ -4,7 +4,7 @@ namespace App\Services\shared;
 
 use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AppointmentService
 {
@@ -26,17 +26,6 @@ class AppointmentService
     public function getAppointmentById(int $id): ?Appointment
     {
         return $this->appointmentInterface->find($id);
-    }
-
-    /**
-     * Get all appointments for employee
-     *
-     * @param int $employeeId
-     * @return Collection
-     */
-    public function getEmployeeAppointments(int $employeeId): Collection
-    {
-        return $this->appointmentInterface->getEmployeeAppointments($employeeId);
     }
 
     /**
@@ -92,6 +81,54 @@ class AppointmentService
         }
 
         return $this->appointmentInterface->update($appointment, $data);
+    }
+
+    /**
+     * Get all appointments paginated with search and status filters (Admin)
+     *
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getAllAppointmentsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->appointmentInterface->getAllAppointmentsPaginated($search, $status, $perPage);
+    }
+
+    /**
+     * Get status counts for all appointments (Admin)
+     *
+     * @return array
+     */
+    public function getStatusCounts(): array
+    {
+        return $this->appointmentInterface->getStatusCounts();
+    }
+
+    /**
+     * Get employee appointments paginated with search and status filters (Employee)
+     *
+     * @param int $employeeId
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getEmployeeAppointmentsPaginated(int $employeeId, ?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->appointmentInterface->getEmployeeAppointmentsPaginated($employeeId, $search, $status, $perPage);
+    }
+
+    /**
+     * Get status counts for employee appointments (Employee)
+     *
+     * @param int $employeeId
+     * @return array
+     */
+    public function getEmployeeStatusCounts(int $employeeId): array
+    {
+        return $this->appointmentInterface->getEmployeeStatusCounts($employeeId);
     }
 
     /**
