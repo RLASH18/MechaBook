@@ -1,13 +1,59 @@
 <?php
 
-namespace App\Repositories\employee;
+namespace App\Repositories\shared;
 
-use App\Interfaces\employee\ScheduleInterface;
+use App\Interfaces\shared\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
 use Illuminate\Database\Eloquent\Collection;
 
-class ScheduleRepository implements ScheduleInterface
+class EmployeeScheduleRepository implements EmployeeScheduleInterface
 {
+    /**
+     * Find a schedule by ID
+     *
+     * @param int $id
+     * @return EmployeeSchedule|null
+     */
+    public function find(int $id): ?EmployeeSchedule
+    {
+        return EmployeeSchedule::find($id);
+    }
+
+    /**
+     * Create a new schedule.
+     *
+     * @param array $data
+     * @return EmployeeSchedule
+     */
+    public function create(array $data): EmployeeSchedule
+    {
+        return EmployeeSchedule::create($data);
+    }
+
+    /**
+     * Update an existing schedule.
+     *
+     * @param EmployeeSchedule $schedule
+     * @param array $data
+     * @return EmployeeSchedule
+     */
+    public function update(EmployeeSchedule $schedule, array $data): EmployeeSchedule
+    {
+        $schedule->update($data);
+        return $schedule;
+    }
+
+    /**
+     * Delete a schedule.
+     *
+     * @param EmployeeSchedule $schedule
+     * @return bool
+     */
+    public function delete(EmployeeSchedule $schedule): bool
+    {
+        return $schedule->delete();
+    }
+
     /**
      * Get all schedules for a specific employee, sorted by day of week
      *

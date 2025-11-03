@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Employee\Appointment;
 
-use App\Services\employee\AppointmentService;
+use App\Services\shared\AppointmentService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 

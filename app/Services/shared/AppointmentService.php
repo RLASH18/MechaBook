@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services\shared;
 
-use App\Interfaces\admin\AppointmentInterface;
+use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -26,6 +26,17 @@ class AppointmentService
     public function getAppointmentById(int $id): ?Appointment
     {
         return $this->appointmentInterface->find($id);
+    }
+
+    /**
+     * Get all appointments for employee
+     *
+     * @param int $employeeId
+     * @return Collection
+     */
+    public function getEmployeeAppointments(int $employeeId): Collection
+    {
+        return $this->appointmentInterface->getEmployeeAppointments($employeeId);
     }
 
     /**
@@ -81,5 +92,24 @@ class AppointmentService
         }
 
         return $this->appointmentInterface->update($appointment, $data);
+    }
+
+    /**
+     * Update appointment status with proof image
+     *
+     * @param int $appointmentId
+     * @param string $status
+     * @param mixed $proofImage
+     * @return bool
+     */
+    public function updateStatusWithProof(int $appointmentId, string $status, $proofImage): bool
+    {
+        $proofImagePath = null;
+
+        if ($proofImage) {
+            $proofImagePath = $proofImage->store('appointment-proofs', 'public');
+        }
+
+        return $this->appointmentInterface->updateStatusWithProof($appointmentId, $status, $proofImagePath);
     }
 }

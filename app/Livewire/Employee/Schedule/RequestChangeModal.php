@@ -3,8 +3,8 @@
 namespace App\Livewire\Employee\Schedule;
 
 use App\Http\Requests\employee\StoreScheduleChangeRequest;
-use App\Services\employee\ScheduleChangeRequestService;
-use App\Services\employee\ScheduleService;
+use App\Services\shared\ScheduleChangeRequestService;
+use App\Services\shared\EmployeeScheduleService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -31,7 +31,7 @@ class RequestChangeModal extends Component
      * Inject services
      */
     public function boot(
-        ScheduleService $scheduleService,
+        EmployeeScheduleService $scheduleService,
         ScheduleChangeRequestService $requestService
     ) {
         $this->scheduleService = $scheduleService;

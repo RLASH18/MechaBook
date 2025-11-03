@@ -1,21 +1,72 @@
 <?php
 
-namespace App\Services\employee;
+namespace App\Services\shared;
 
-use App\Interfaces\employee\ScheduleInterface;
+use App\Interfaces\shared\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
 use Illuminate\Database\Eloquent\Collection;
 
-class ScheduleService
+class EmployeeScheduleService
 {
     /**
-     * Inject the ScheduleInterface (Repository).
+     * Inject the EmployeeScheduleInterface (Repository).
      *
-     * @param ScheduleInterface $scheduleInterface
+     * @param EmployeeScheduleInterface $scheduleInterface
      */
     public function __construct(
-        protected ScheduleInterface $scheduleInterface
+        protected EmployeeScheduleInterface $scheduleInterface
     ) {}
+
+    /**
+     * Retrieve a schedule by ID.
+     *
+     * @param int $id
+     * @return \App\Models\EmployeeSchedule|null
+     */
+    public function getScheduleById(int $id)
+    {
+        return $this->scheduleInterface->find($id);
+    }
+
+    /**
+     * Create a new schedule.
+     *
+     * @param array $data
+     * @return \App\Models\EmployeeSchedule
+     */
+    public function createSchedule(array $data)
+    {
+        return $this->scheduleInterface->create($data);
+    }
+
+    /**
+     * Update schedule details by ID.
+     *
+     * @param int $id
+     * @param array $data
+     * @return \App\Models\EmployeeSchedule|null
+     */
+    public function updateSchedule(int $id, array $data)
+    {
+        $schedule = $this->scheduleInterface->find($id);
+        if (! $schedule) return null;
+
+        return $this->scheduleInterface->update($schedule, $data);
+    }
+
+    /**
+     * Delete a schedule by ID.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function deleteSchedule(int $id)
+    {
+        $schedule = $this->scheduleInterface->find($id);
+        if (! $schedule) return false;
+
+        return $this->scheduleInterface->delete($schedule);
+    }
 
     /**
      * Get all schedules for a specific employee
@@ -61,7 +112,7 @@ class ScheduleService
     public function calculateTotalHours(Collection $schedules): float
     {
         $totalHours = 0;
-        foreach($schedules as $schedule) {
+        foreach ($schedules as $schedule) {
             $start = strtotime($schedule->start_time);
             $end = strtotime($schedule->end_time);
             $totalHours += ($end - $start) / 3600;

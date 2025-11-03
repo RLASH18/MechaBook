@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Employee\Schedule;
 
-use App\Services\employee\ScheduleService;
+use App\Services\shared\EmployeeScheduleService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -22,7 +22,7 @@ class CalendarModal extends Component
     /**
      * Inject the schedule service
      */
-    public function boot(ScheduleService $scheduleService)
+    public function boot(EmployeeScheduleService $scheduleService)
     {
         $this->scheduleService = $scheduleService;
     }

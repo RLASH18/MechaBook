@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Schedule;
 
 use App\Http\Requests\admin\schedule\StoreScheduleRequest;
 use App\Http\Requests\admin\schedule\UpdateScheduleRequest;
-use App\Services\admin\EmployeeScheduleService;
+use App\Services\shared\EmployeeScheduleService;
 use Livewire\Component;
 
 class ScheduleModal extends Component

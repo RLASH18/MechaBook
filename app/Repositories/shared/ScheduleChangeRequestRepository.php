@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories\admin;
+namespace App\Repositories\shared;
 
-use App\Interfaces\admin\ScheduleChangeRequestInterface;
+use App\Interfaces\shared\ScheduleChangeRequestInterface;
 use App\Models\EmployeeSchedule;
 use App\Models\ScheduleChangeRequest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
@@ -89,5 +90,29 @@ class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
             'reviewed_by' => $data['reviewed_by'],
             'reviewed_at' => now(),
         ]);
+    }
+
+    /**
+     * Get all schedule change requests for a specific employee
+     *
+     * @param int $employeeId
+     * @return Collection
+     */
+    public function getEmployeeRequests(int $employeeId): Collection
+    {
+        return ScheduleChangeRequest::where('employee_id', $employeeId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * Create a new schedule change request
+     *
+     * @param array $data
+     * @return ScheduleChangeRequest
+     */
+    public function createRequest(array $data): ScheduleChangeRequest
+    {
+        return ScheduleChangeRequest::create($data);
     }
 }

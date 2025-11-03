@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
-use App\Services\employee\ScheduleChangeRequestService;
-use App\Services\employee\ScheduleService;
+use App\Services\shared\ScheduleChangeRequestService;
+use App\Services\shared\EmployeeScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
     /**
-     * Inject the services
+     * Inject the shared services
      *
-     * @param ScheduleService $scheduleService
+     * @param EmployeeScheduleService $scheduleService
      * @param ScheduleChangeRequestService $requestService
      */
     public function __construct(
-        protected ScheduleService $scheduleService,
+        protected EmployeeScheduleService $scheduleService,
         protected ScheduleChangeRequestService $requestService
     ) {}
 
@@ -29,7 +29,7 @@ class ScheduleController extends Controller
         $user = Auth::user();
         $currentDay = now()->format('D');
 
-        // Get all schedules fo the employee
+        // Get all schedules for the employee
         $schedules = $this->scheduleService->getEmployeeSchedules($user->id);
 
         // Get today's schedule
