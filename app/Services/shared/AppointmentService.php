@@ -155,7 +155,9 @@ class AppointmentService
         $proofImagePath = null;
 
         if ($proofImage) {
-            $proofImagePath = $proofImage->store('appointment-proofs', 'public');
+            $extension = $proofImage->getClientOriginalExtension();
+            $proofImageName = 'proof_img_' . time() . '_' . uniqid() . '.' . $extension;
+            $proofImagePath = $proofImage->storeAs('appointment-proofs', $proofImageName, 'public');
         }
 
         return $this->appointmentInterface->updateStatusWithProof($appointmentId, $status, $proofImagePath);
