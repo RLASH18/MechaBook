@@ -43,7 +43,7 @@
                 $todaySchedule = $employee->employeeSchedules->where('day_of_week', now()->format('D'))->first();
             @endphp
 
-            <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200 flex flex-col">
                 {{-- Employee Header --}}
                 <div class="flex items-center mb-4">
                     <div
@@ -115,8 +115,8 @@
 
                 {{-- Schedule List with Edit/Delete --}}
                 @if ($employee->employeeSchedules->count() > 0)
-                    <div class="pt-4 border-t border-gray-200">
-                        <div class="space-y-2">
+                    <div class="pt-4 border-t border-gray-200 flex-grow flex flex-col">
+                        <div class="space-y-2 mb-3 flex-grow">
                             @foreach ($employee->employeeSchedules as $schedule)
                                 <div
                                     class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg transition-colors">
@@ -153,6 +153,15 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{-- Add More Schedule Button --}}
+                        <button wire:click="$dispatch('openCreateModal', {employeeId: {{ $employee->id }}})"
+                            class="w-full px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add Schedule
+                        </button>
                     </div>
                 @else
                     <div class="pt-4 border-t border-gray-200 text-center">

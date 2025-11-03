@@ -25,7 +25,11 @@ class StoreScheduleRequest extends FormRequest
     {
         return [
             'employee_id' => 'required|exists:users,id',
-            'day_of_week' => 'required|in:Mon,Tue,Wed,Thu,Fri,Sat,Sun',
+            'day_of_week' => [
+                'required',
+                'in:Mon,Tue,Wed,Thu,Fri,Sat,Sun',
+                'unique:employee_schedules,day_of_week,NULL,id,employee_id,' . $this->employee_id
+            ],
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
         ];
@@ -43,6 +47,7 @@ class StoreScheduleRequest extends FormRequest
             'employee_id.exists' => 'The selected employee does not exist.',
             'day_of_week.required' => 'Please select a day of the week.',
             'day_of_week.in' => 'Invalid day of the week selected.',
+            'day_of_week.unique' => 'A schedule for this employee on this day already exists.',
             'start_time.required' => 'Please enter a start time.',
             'start_time.date_format' => 'Please enter a valid start time (e.g., 09:00 AM).',
             'end_time.required' => 'Please enter an end time.',

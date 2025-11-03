@@ -8,7 +8,9 @@
                 <x-form.select name="day_of_week" wire:model="day_of_week">
                     <option value="">Select Day</option>
                     @foreach ($daysOfWeek as $day)
-                        <option value="{{ $day }}">{{ $day }}</option>
+                        <option value="{{ $day }}" @if(in_array($day, $existingScheduledDays)) disabled @endif>
+                            {{ $day }} @if(in_array($day, $existingScheduledDays)) (Already scheduled) @endif
+                        </option>
                     @endforeach
                 </x-form.select>
                 <x-form.error name="day_of_week" />
