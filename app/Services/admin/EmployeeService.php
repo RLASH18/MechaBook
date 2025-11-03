@@ -4,6 +4,7 @@ namespace App\Services\admin;
 
 use App\Interfaces\admin\EmployeeInterface;
 use App\UserRole;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class EmployeeService
 {
@@ -71,5 +72,17 @@ class EmployeeService
         if (!$user) return false;
 
         return $this->employeeInterface->delete($user);
+    }
+
+    /**
+     * Get employees paginated with search filter.
+     *
+     * @param string|null $search
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getEmployeesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->employeeInterface->getEmployeesPaginated($search, $perPage);
     }
 }

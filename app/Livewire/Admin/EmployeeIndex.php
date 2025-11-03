@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\User;
+use App\Services\admin\EmployeeService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +14,16 @@ class EmployeeIndex extends Component
 
     protected $queryString = ['search'];
 
+    protected $employeeService;
+
+    /**
+     * Inject the employee service
+     */
+    public function boot(EmployeeService $employeeService)
+    {
+        $this->employeeService = $employeeService;
+    }
+
     /**
      * Resets pagination when the search input is updated
      */
@@ -24,15 +34,8 @@ class EmployeeIndex extends Component
 
     public function render()
     {
-        // Fetch employees filtered by search term and ordered by newest
-        $employees = User::where('role', 'employee')
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-                    ->orWhere('phone', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        // Fetch employees using service
+        $employees = $this->employeeService->getEmployeesPaginated($this->search, 10);
 
         return view('livewire.admin.employee-index', [
             'employees' => $employees
