@@ -282,9 +282,9 @@
                     @endforelse
                 </x-table.tbody>
             </x-table.table>
-
-            {{-- Pagination --}}
-            <x-pagination :items="$appointments" />
         </div>
+
+        {{-- Pagination --}}
+        <x-pagination :items="$appointments" />
     </div>
 </div>

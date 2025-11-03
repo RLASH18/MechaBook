@@ -109,9 +109,9 @@
                     @endforelse
                 </x-table.tbody>
             </x-table.table>
-
-            {{-- Pagination --}}
-            <x-pagination :items="$services" />
         </div>
+
+        {{-- Pagination --}}
+        <x-pagination :items="$services" />
     </div>
 </div>
