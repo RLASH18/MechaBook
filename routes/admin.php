@@ -28,5 +28,5 @@ Route::prefix('admin')->name('admin.')
 
         Route::resource('service', ServiceController::class);
 
-        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.inde');
+        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
     });
