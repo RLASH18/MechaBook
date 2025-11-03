@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\ScheduleChangeRequest;
 
-use App\Models\ScheduleChangeRequest;
+use App\Services\shared\ScheduleChangeRequestService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,6 +15,16 @@ class RequestIndex extends Component
 
     protected $queryString = ['search', 'status'];
     protected $listeners = ['requestReviewed' => '$refresh'];
+
+    protected $requestService;
+
+    /**
+     * Inject the request service
+     */
+    public function boot(ScheduleChangeRequestService $requestService)
+    {
+        $this->requestService = $requestService;
+    }
 
     /**
      * Reset pagination when filters change
@@ -57,19 +67,8 @@ class RequestIndex extends Component
 
     public function render()
     {
-        $requests = ScheduleChangeRequest::with(['employee', 'reviewer'])
-            ->when($this->status !== 'all', function ($q) {
-                $q->where('status', $this->status);
-            })
-            ->when($this->search, function ($q) {
-                $q->whereHas('employee', function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        // Fetch requests using service
+        $requests = $this->requestService->getRequestsPaginated($this->search, $this->status, 5);
 
         return view('livewire.admin.schedule-change-request.request-index', [
             'requests' => $requests

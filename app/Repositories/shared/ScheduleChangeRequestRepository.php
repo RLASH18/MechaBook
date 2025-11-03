@@ -6,6 +6,7 @@ use App\Interfaces\shared\ScheduleChangeRequestInterface;
 use App\Models\EmployeeSchedule;
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
@@ -90,6 +91,31 @@ class ScheduleChangeRequestRepository implements ScheduleChangeRequestInterface
             'reviewed_by' => $data['reviewed_by'],
             'reviewed_at' => now(),
         ]);
+    }
+
+    /**
+     * Get schedule change requests paginated with search and status filters
+     *
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getRequestsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        return ScheduleChangeRequest::with(['employee', 'reviewer'])
+            ->when($status && $status !== 'all', function ($q) use ($status) {
+                $q->where('status', $status);
+            })
+            ->when($search, function ($q) use ($search) {
+                $q->whereHas('employee', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            })
+            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
     /**

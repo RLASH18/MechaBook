@@ -5,6 +5,7 @@ namespace App\Services\shared;
 use App\Interfaces\shared\ScheduleChangeRequestInterface;
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ScheduleChangeRequestService
 {
@@ -50,6 +51,19 @@ class ScheduleChangeRequestService
     public function rejectRequest(ScheduleChangeRequest $request, array $data): bool
     {
         return $this->requestInterface->rejectRequest($request, $data);
+    }
+
+    /**
+     * Get schedule change requests paginated with search and status filters.
+     *
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getRequestsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->requestInterface->getRequestsPaginated($search, $status, $perPage);
     }
 
     /**
