@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\shared;
 
-use App\Interfaces\SettingsInterface;
+use App\Interfaces\shared\SettingsInterface;
 use App\Models\User;
 
 class SettingsRepository implements SettingsInterface

@@ -3,7 +3,8 @@
 namespace App\Livewire\Settings;
 
 use App\Http\Requests\settings\UpdatePasswordRequest;
-use App\Services\SettingsService;
+use App\Services\shared\SettingsService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EditPasswordModal extends Component
@@ -64,7 +65,7 @@ class EditPasswordModal extends Component
         $validated = $this->validate($request->rules(), $request->messages());
 
         $result = $this->settingsService->updatePassword(
-            auth()->id(),
+            Auth::id(),
             $validated['current_password'],
             $validated['new_password']
         );

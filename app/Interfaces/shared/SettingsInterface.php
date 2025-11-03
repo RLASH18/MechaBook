@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Interfaces\shared;
 
 use App\Models\User;
 

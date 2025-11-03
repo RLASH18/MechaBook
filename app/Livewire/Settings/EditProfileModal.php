@@ -3,7 +3,8 @@
 namespace App\Livewire\Settings;
 
 use App\Http\Requests\settings\UpdateProfileRequest;
-use App\Services\SettingsService;
+use App\Services\shared\SettingsService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EditProfileModal extends Component
@@ -34,7 +35,7 @@ class EditProfileModal extends Component
      */
     public function openModal()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone = $user->phone;
@@ -67,7 +68,7 @@ class EditProfileModal extends Component
         $request = new UpdateProfileRequest();
         $validated = $this->validate($request->rules(), $request->messages());
 
-        $result = $this->settingsService->updateUserProfile(auth()->id(), $validated);
+        $result = $this->settingsService->updateUserProfile(Auth::id(), $validated);
 
         if ($result) {
             notyf()->success('Profile updated successfully!');

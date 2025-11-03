@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\shared;
 
-use App\Interfaces\SettingsInterface;
+use App\Interfaces\shared\SettingsInterface;
 use Illuminate\Support\Facades\Hash;
 
 class SettingsService

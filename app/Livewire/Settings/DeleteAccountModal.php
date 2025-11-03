@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Settings;
 
-use App\Services\SettingsService;
+use App\Services\shared\SettingsService;
 use App\Traits\LogoutHandler;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class DeleteAccountModal extends Component
@@ -72,7 +73,7 @@ class DeleteAccountModal extends Component
     {
         $this->validate();
 
-        $result = $this->settingsService->deleteAccount(auth()->id(), $this->password);
+        $result = $this->settingsService->deleteAccount(Auth::id(), $this->password);
 
         if ($result['success']) {
             notyf()->success($result['message']);
