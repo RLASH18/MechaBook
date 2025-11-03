@@ -4,6 +4,7 @@ namespace App\Services\shared;
 
 use App\Interfaces\shared\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class EmployeeScheduleService
@@ -66,6 +67,11 @@ class EmployeeScheduleService
         if (! $schedule) return false;
 
         return $this->scheduleInterface->delete($schedule);
+    }
+
+    public function getEmployeesWithSchedulesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->scheduleInterface->getEmployeesWithSchedulesPaginated($search, $perPage);
     }
 
     /**

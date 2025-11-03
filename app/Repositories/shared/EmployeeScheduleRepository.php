@@ -4,7 +4,9 @@ namespace App\Repositories\shared;
 
 use App\Interfaces\shared\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class EmployeeScheduleRepository implements EmployeeScheduleInterface
 {
@@ -52,6 +54,30 @@ class EmployeeScheduleRepository implements EmployeeScheduleInterface
     public function delete(EmployeeSchedule $schedule): bool
     {
         return $schedule->delete();
+    }
+
+    /**
+     * Get employees with their schedules paginated with search filter
+     *
+     * @param string|null $search
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getEmployeesWithSchedulesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    {
+        return User::where('role', 'employee')
+            ->with(['employeeSchedules' => function ($query) {
+                $query->orderByRaw("FIELD(day_of_week, 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')");
+            }])
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%');
+                });
+            })
+            ->orderBy('name')
+            ->paginate($perPage);
     }
 
     /**

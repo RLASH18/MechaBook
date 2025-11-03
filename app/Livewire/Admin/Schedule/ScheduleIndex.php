@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Schedule;
 
 use App\Models\User;
+use App\Services\shared\EmployeeScheduleService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +18,16 @@ class ScheduleIndex extends Component
     // Refreshes the component when a schedule is updated
     protected $listeners = ['scheduleUpdated' => '$refresh'];
 
+    protected $scheduleService;
+
+    /**
+     * Inject the schedule service
+     */
+    public function boot(EmployeeScheduleService $scheduleService)
+    {
+        $this->scheduleService = $scheduleService;
+    }
+
     /**
      * Resets pagination when the search input is updated
      */
@@ -27,20 +38,8 @@ class ScheduleIndex extends Component
 
     public function render()
     {
-        // Fetch all employees with their schedules (ordered by weekday),
-        $employees = User::where('role', 'employee')
-            ->with(['employeeSchedules' => function ($query) {
-                $query->orderByRaw("FIELD(day_of_week, 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')");
-            }])
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%')
-                        ->orWhere('phone', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->orderBy('name')
-            ->paginate(8);
+        // Fetch employees with schedules using service
+        $employees = $this->scheduleService->getEmployeesWithSchedulesPaginated($this->search, 8);
 
         return view('livewire.admin.schedule.schedule-index', [
             'employees' => $employees
