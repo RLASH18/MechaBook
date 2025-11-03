@@ -1,15 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\employee\EmployeeController as EmployeeMainController;
-use App\Http\Controllers\admin\AppointmentController;
-use App\Http\Controllers\admin\EmployeeController as AdminEmployeeController;
-use App\Http\Controllers\admin\ScheduleChangeRequest;
-use App\Http\Controllers\admin\ScheduleController as AdminScheduleController;
-use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\employee\ScheduleController as EmployeeScheduleController;
-use App\Http\Controllers\employee\AppointmentController as EmployeeAppointmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,43 +19,5 @@ Route::middleware('guest')->group(function () {
     });
 });
 
-/**
- * Admin Route
- */
-Route::prefix('admin')->name('admin.')
-    ->middleware(['auth', 'role:admin'])
-    ->group(function () {
-
-        Route::controller(AdminController::class)->group(function () {
-            Route::get('dashboard', 'dashboard')->name('dashboard');
-            Route::get('settings', 'settings')->name('settings');
-            Route::post('logout', 'logout')->name('logout');
-        });
-
-        Route::resource('employee', AdminEmployeeController::class);
-
-        Route::get('schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
-        Route::get('schedule/requests', [ScheduleChangeRequest::class, 'index'])->name('schedule.requests');
-
-        Route::resource('service', ServiceController::class);
-
-        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
-    });
-
-/**
- * Employee Route
- */
-Route::prefix('employee')->name('employee.')
-    ->middleware(['auth', 'role:employee'])
-    ->group(function () {
-
-        Route::controller(EmployeeMainController::class)->group(function () {
-            Route::get('dashboard', 'dashboard')->name('dashboard');
-            Route::get('settings', 'settings')->name('settings');
-            Route::post('logout', 'logout')->name('logout');
-        });
-
-        Route::resource('schedule', EmployeeScheduleController::class);
-
-        Route::resource('appointment', EmployeeAppointmentController::class);
-    });
+require __DIR__.'/admin.php';
+require __DIR__.'/employee.php';

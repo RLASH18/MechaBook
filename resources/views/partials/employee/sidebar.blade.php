@@ -28,7 +28,7 @@
 
                 {{-- Schedule --}}
                 <a wire:navigate href="{{ route('employee.schedule.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('employee.schedule.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('employee.schedule.index') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
                             d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z" />
@@ -38,7 +38,7 @@
 
                 {{-- Appointment --}}
                 <a wire:navigate href="{{ route('employee.appointment.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('employee.appointment.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('employee.appointment.index') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
                             d="M20 2C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22H6C5.44772 22 5 21.5523 5 21V19H3V17H5V15H3V13H5V11H3V9H5V7H3V5H5V3C5 2.44772 5.44772 2 6 2H20ZM19 4H7V20H19V4ZM14 8V11H17V13H13.999L14 16H12L11.999 13H9V11H12V8H14Z" />
