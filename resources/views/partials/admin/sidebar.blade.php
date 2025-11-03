@@ -53,24 +53,13 @@
                         </svg>
                     </button>
 
-                    <div x-show="open" x-collapse class="ml-5 mt-2 space-y-2 border-l-2 border-blue-500/70 pl-3">
+                    <div x-show="open" x-collapse class="ml-5 mt-2 space-y-2 border-l-2 border-blue-500/70 pl-2">
                         <a wire:navigate href="{{ route('admin.schedule.index') }}"
                             class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.index') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" class="w-4 h-4" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days">
-                                <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="M8 14h.01" />
-                                <path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" />
-                            </svg>
                             <span class="ml-2">Manage Schedules</span>
                         </a>
                         <a wire:navigate href="{{ route('admin.schedule.requests') }}"
                             class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.requests') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
-                                <path d="M16 14v2.2l1.6 1" /><path d="M16 2v4" /><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
-                                <path d="M3 10h5" /><path d="M8 2v4" /><circle cx="16" cy="16" r="6" />
-                            </svg>
                             <span class="ml-2">Change Requests</span>
                         </a>
                     </div>
@@ -79,9 +68,11 @@
                 {{-- Service --}}
                 <a wire:navigate href="{{ route('admin.service.index') }}"
                     class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.service.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path
-                            d="M3.16113 4.46875C5.58508 2.0448 9.44716 1.9355 12.0008 4.14085C14.5528 1.9355 18.4149 2.0448 20.8388 4.46875C23.2584 6.88836 23.3716 10.741 21.1785 13.2947L13.4142 21.0858C12.6686 21.8313 11.4809 21.8652 10.6952 21.1874L10.5858 21.0858L2.82141 13.2947C0.628282 10.741 0.741522 6.88836 3.16113 4.46875ZM4.57534 5.88296C2.86819 7.59011 2.81942 10.3276 4.42902 12.0937L4.57534 12.2469L12 19.6715L17.3026 14.3675L13.7677 10.8327L12.7071 11.8934C11.5355 13.0649 9.636 13.0649 8.46443 11.8934C7.29286 10.7218 7.29286 8.8223 8.46443 7.65073L10.5656 5.54823C8.85292 4.17713 6.37076 4.23993 4.7286 5.73663L4.57534 5.88296ZM13.0606 8.71139C13.4511 8.32086 14.0843 8.32086 14.4748 8.71139L18.7168 12.9533L19.4246 12.2469C21.1819 10.4896 21.1819 7.64032 19.4246 5.88296C17.7174 4.17581 14.9799 4.12704 13.2139 5.73663L13.0606 5.88296L9.87864 9.06494C9.51601 9.42757 9.49011 9.99942 9.80094 10.3919L9.87864 10.4792C10.2413 10.8418 10.8131 10.8677 11.2056 10.5569L11.2929 10.4792L13.0606 8.71139Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-5 h-5"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-briefcase-icon lucide-briefcase">
+                        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        <rect width="20" height="14" x="2" y="6" rx="2" />
                     </svg>
                     <span class="mx-2 text-sm font-medium">Services</span>
                 </a>
@@ -115,8 +106,7 @@
                     @csrf
                     <button type="submit"
                         class="flex items-center px-3 py-2 text-gray-300 rounded-lg w-full hover:bg-gray-400 hover:text-gray-900 transition-colors duration-300 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path
                                 d="M4 18H6V20H18V4H6V6H4V3C4 2.44772 4.44772 2 5 2H19C19.5523 2 20 2.44772 20 3V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V18ZM6 11H13V13H6V16L1 12L6 8V11Z" />
                         </svg>
