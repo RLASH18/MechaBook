@@ -2,22 +2,18 @@
 
 namespace App\Providers;
 
-use App\Interfaces\admin\AppointmentInterface;
-use App\Repositories\admin\EmployeeRepository;
 use App\Interfaces\admin\EmployeeInterface;
-use App\Interfaces\admin\EmployeeScheduleInterface;
-use App\Interfaces\admin\ScheduleChangeRequestInterface as AdminScheduleChangeRequestInterface;
 use App\Interfaces\admin\ServiceInterface;
-use App\Interfaces\employee\ScheduleChangeRequestInterface;
-use App\Interfaces\employee\ScheduleInterface;
-use App\Interfaces\SettingsInterface;
-use App\Repositories\admin\AppointmentRepository;
-use App\Repositories\admin\EmployeeScheduleRepository;
-use App\Repositories\admin\ScheduleChangeRequestRepository as AdminScheduleChangeRequestRepository;
+use App\Interfaces\shared\SettingsInterface;
+use App\Interfaces\shared\AppointmentInterface;
+use App\Interfaces\shared\EmployeeScheduleInterface;
+use App\Interfaces\shared\ScheduleChangeRequestInterface;
+use App\Repositories\admin\EmployeeRepository;
 use App\Repositories\admin\ServiceRepository;
-use App\Repositories\employee\ScheduleChangeRequestRepository;
-use App\Repositories\employee\ScheduleRepository;
-use App\Repositories\SettingsRepository;
+use App\Repositories\shared\SettingsRepository;
+use App\Repositories\shared\AppointmentRepository;
+use App\Repositories\shared\EmployeeScheduleRepository;
+use App\Repositories\shared\ScheduleChangeRequestRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,13 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(EmployeeInterface::class, EmployeeRepository::class);
         $this->app->bind(EmployeeScheduleInterface::class, EmployeeScheduleRepository::class);
-        $this->app->bind(AdminScheduleChangeRequestInterface::class, AdminScheduleChangeRequestRepository::class);
-        $this->app->bind(ServiceInterface::class, ServiceRepository::class);
-        $this->app->bind(SettingsInterface::class, SettingsRepository::class);
-        $this->app->bind(AppointmentInterface::class, AppointmentRepository::class);
-
-        $this->app->bind(ScheduleInterface::class, ScheduleRepository::class);
         $this->app->bind(ScheduleChangeRequestInterface::class, ScheduleChangeRequestRepository::class);
+        $this->app->bind(ServiceInterface::class, ServiceRepository::class);
+        $this->app->bind(AppointmentInterface::class, AppointmentRepository::class);
+        $this->app->bind(SettingsInterface::class, SettingsRepository::class);
     }
 
     /**
