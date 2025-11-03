@@ -5,6 +5,7 @@ namespace App\Services\admin;
 use App\Interfaces\admin\ServiceInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ServiceManager
 {
@@ -86,6 +87,18 @@ class ServiceManager
         }
 
         return $this->serviceInterface->delete($service);
+    }
+
+    /**
+     * Get services paginated with search filter.
+     *
+     * @param string|null $search
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getServicesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->serviceInterface->getServicesPaginated($search, $perPage);
     }
 
     /**

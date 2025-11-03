@@ -4,6 +4,7 @@ namespace App\Repositories\admin;
 
 use App\Interfaces\admin\ServiceInterface;
 use App\Models\Service;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ServiceRepository implements ServiceInterface
 {
@@ -51,5 +52,22 @@ class ServiceRepository implements ServiceInterface
     public function delete(Service $service): bool
     {
         return $service->delete();
+    }
+
+    /**
+     * Get services paginated with search filter.
+     *
+     * @param string|null $search
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getServicesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    {
+        return Service::when($search, function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 }
