@@ -2,18 +2,13 @@
 
 namespace App\Livewire\Admin\Appointment;
 
+use App\Livewire\Traits\WithFiltersAndPagination;
 use App\Services\shared\AppointmentService;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class AppointmentIndex extends Component
 {
-    use WithPagination;
-
-    public $search = '';
-    public $status = 'all';
-
-    protected $queryString = ['search', 'status'];
+    use WithFiltersAndPagination;
 
     // Refreshes the component when an appointment is updated
     protected $listeners = ['appointmentUpdated' => '$refresh'];
@@ -26,22 +21,6 @@ class AppointmentIndex extends Component
     public function boot(AppointmentService $appointmentService)
     {
         $this->appointmentService = $appointmentService;
-    }
-
-    /**
-     * Resets pagination when the search input is updated
-     */
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    /**
-     * Resets pagination when the status filter is updated
-     */
-    public function updatingStatus()
-    {
-        $this->resetPage();
     }
 
     public function render()

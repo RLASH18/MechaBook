@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin;
 
+use App\Livewire\Traits\WithFiltersAndPagination;
 use App\Services\admin\EmployeeService;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class EmployeeIndex extends Component
 {
-    use WithPagination;
-
-    public $search = '';
-
-    protected $queryString = ['search'];
+    use WithFiltersAndPagination;
 
     protected $employeeService;
 
@@ -22,14 +18,6 @@ class EmployeeIndex extends Component
     public function boot(EmployeeService $employeeService)
     {
         $this->employeeService = $employeeService;
-    }
-
-    /**
-     * Resets pagination when the search input is updated
-     */
-    public function updatingSearch()
-    {
-        $this->resetPage();
     }
 
     public function render()

@@ -2,18 +2,14 @@
 
 namespace App\Livewire\Admin\ScheduleChangeRequest;
 
+use App\Livewire\Traits\WithFiltersAndPagination;
 use App\Services\shared\ScheduleChangeRequestService;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class RequestIndex extends Component
 {
-    use WithPagination;
+    use WithFiltersAndPagination;
 
-    public $status = 'pending';
-    public $search = '';
-
-    protected $queryString = ['search', 'status'];
     protected $listeners = ['requestReviewed' => '$refresh'];
 
     protected $requestService;
@@ -24,19 +20,6 @@ class RequestIndex extends Component
     public function boot(ScheduleChangeRequestService $requestService)
     {
         $this->requestService = $requestService;
-    }
-
-    /**
-     * Reset pagination when filters change
-     */
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingStatus()
-    {
-        $this->resetPage();
     }
 
     /**

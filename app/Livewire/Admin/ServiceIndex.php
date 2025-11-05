@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Admin;
 
+use App\Livewire\Traits\WithFiltersAndPagination;
 use App\Services\admin\ServiceManager;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ServiceIndex extends Component
 {
-    use WithPagination;
-
-    public $search = '';
-
-    protected $queryString = ['search'];
+    use WithFiltersAndPagination;
 
     protected $serviceManager;
 
@@ -22,14 +18,6 @@ class ServiceIndex extends Component
     public function boot(ServiceManager $serviceManager)
     {
         $this->serviceManager = $serviceManager;
-    }
-
-    /**
-     * Resets pagination when the search input is updated
-     */
-    public function updatingSearch()
-    {
-        $this->resetPage();
     }
 
     public function render()
