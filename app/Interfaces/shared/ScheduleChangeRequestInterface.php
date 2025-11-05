@@ -4,17 +4,13 @@ namespace App\Interfaces\shared;
 
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 interface ScheduleChangeRequestInterface
 {
-    // Admin methods
-    public function find(int $id): ?ScheduleChangeRequest;
-    public function approveRequest(ScheduleChangeRequest $request, array $data): bool;
-    public function rejectRequest(ScheduleChangeRequest $request, array $data): bool;
-    public function getRequestsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator;
-
-    // Employee methods
+    public function find(int $id, array $relations = []): ?ScheduleChangeRequest;
+    public function create(array $data): ScheduleChangeRequest;
+    public function update(ScheduleChangeRequest $request, array $data): bool;
+    public function getBaseQuery(array $relations = []): Builder;
     public function getEmployeeRequests(int $employeeId): Collection;
-    public function createRequest(array $data): ScheduleChangeRequest;
 }
