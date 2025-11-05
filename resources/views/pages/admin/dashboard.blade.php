@@ -1,9 +1,13 @@
 @extends('layouts.app')
 @section('main')
     {{-- Header --}}
-    <x-page-header title="Dashboard">
-        Welcome back <strong class="text-blue-600">{{ auth()->user()->name }}</strong>!
-    </x-page-header>
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <x-page-header title="Dashboard">
+                Welcome back <strong class="text-blue-600">{{ auth()->user()->name }}</strong>!
+            </x-page-header>
+        </div>
+    </div>
 
     <div class="grid grid-cols-4 gap-4 mb-4">
         {{-- Total Customers --}}
