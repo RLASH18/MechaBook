@@ -2,7 +2,7 @@
 @section('main')
     <div class="flex items-center justify-between mb-4">
         <div>
-            <x-page-header title="Appointmets">
+            <x-page-header title="Appointments">
                 Manage customer appointments, assign employees, and update status
             </x-page-header>
         </div>
