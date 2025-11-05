@@ -26,9 +26,4 @@ class EmployeeController extends Controller
             'user' => $user
         ]);
     }
-
-    public function logout()
-    {
-        return $this->logoutUser();
-    }
 }

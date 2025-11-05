@@ -39,9 +39,4 @@ class AdminController extends Controller
             'user' => $user
         ]);
     }
-
-    public function logout()
-    {
-        return $this->logoutUser();
-    }
 }
