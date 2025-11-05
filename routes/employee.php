@@ -18,7 +18,7 @@ Route::prefix('employee')->name('employee.')
             Route::post('logout', 'logout')->name('logout');
         });
 
-        Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
 
-        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
+        Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     });
