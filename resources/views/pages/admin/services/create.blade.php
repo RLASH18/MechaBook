@@ -8,7 +8,7 @@
         </div>
 
         <div>
-            <x-button-link href="{{ route('admin.service.index') }}" text="Go back">
+            <x-button-link href="{{ route('admin.services.index') }}" text="Go back">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
                     <path
                         d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z" />
@@ -18,7 +18,7 @@
     </div>
 
     {{-- Form Container --}}
-    <x-form.container action="{{ route('admin.service.store') }}" enctype="multipart/form-data">
+    <x-form.container action="{{ route('admin.services.store') }}" enctype="multipart/form-data">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
             {{-- Left Column - Service Details --}}
             <div class="lg:col-span-2 space-y-6">
@@ -120,7 +120,7 @@
 
         {{-- Submit Button --}}
         <div class="mt-8 flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-            <x-button-link href="{{ route('admin.service.index') }}" text="Cancel" />
+            <x-button-link href="{{ route('admin.services.index') }}" text="Cancel" />
             <x-form.button type="submit" text="Add Service">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

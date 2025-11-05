@@ -9,7 +9,7 @@
         </div>
 
         <div>
-            <x-button-link href="{{ route('admin.service.index') }}" text="Go back">
+            <x-button-link href="{{ route('admin.services.index') }}" text="Go back">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
                     <path
                         d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z" />
@@ -156,7 +156,7 @@
 
             {{-- Action Buttons --}}
             <div class="mt-8 flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-                <form action="{{ route('admin.service.destroy', $service->id) }}" method="POST">
+                <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <x-form.button type="submit" text="Delete Service"
@@ -168,7 +168,7 @@
                         </svg>
                     </x-form.button>
                 </form>
-                <x-button-link href="{{ route('admin.service.edit', $service->id) }}" text="Edit Service"
+                <x-button-link href="{{ route('admin.services.edit', $service->id) }}" text="Edit Service"
                     class="!bg-green-600 hover:!bg-green-700 focus:!ring-green-500 focus:!border-green-600 focus-visible:!ring-green-600 active:!ring-green-600 text-white">
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path

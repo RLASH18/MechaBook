@@ -57,7 +57,7 @@
                                 <div class="flex items-center gap-4">
 
                                     {{-- Show Button --}}
-                                    <x-icon-button href="{{ route('admin.service.show', $service->id) }}"
+                                    <x-icon-button href="{{ route('admin.services.show', $service->id) }}"
                                         title="View Service">
                                         <svg class="w-5 h-5 cursor-pointer fill-gray-700 hover:fill-indigo-600"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -67,7 +67,7 @@
                                     </x-icon-button>
 
                                     {{-- Edit Button --}}
-                                    <x-icon-button href="{{ route('admin.service.edit', $service->id) }}"
+                                    <x-icon-button href="{{ route('admin.services.edit', $service->id) }}"
                                         title="Edit Service">
                                         <svg class="w-5 h-5 cursor-pointer fill-gray-700 hover:fill-green-600"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +77,7 @@
                                     </x-icon-button>
 
                                     {{-- Delete Button --}}
-                                    <form action="{{ route('admin.service.destroy', $service->id) }}" method="POST">
+                                    <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" title="Delete Service">

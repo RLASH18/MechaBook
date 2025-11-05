@@ -110,7 +110,7 @@ class EmployeeController extends Controller
     private function employeeSuccess(string $message): RedirectResponse
     {
         notyf()->success($message);
-        return redirect()->route('admin.employee.index');
+        return redirect()->route('admin.employees.index');
     }
 
     /**
@@ -119,6 +119,6 @@ class EmployeeController extends Controller
     private function employeeNotFound(): RedirectResponse
     {
         notyf()->error('Employee not found!');
-        return redirect()->route('admin.employee.index');
+        return redirect()->route('admin.employees.index');
     }
 }

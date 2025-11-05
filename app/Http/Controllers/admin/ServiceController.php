@@ -118,7 +118,7 @@ class ServiceController extends Controller
     public function serviceSuccess(string $message)
     {
         notyf()->success($message);
-        return redirect()->route('admin.service.index');
+        return redirect()->route('admin.services.index');
     }
 
     /**
@@ -129,6 +129,6 @@ class ServiceController extends Controller
     public function serviceNotFound()
     {
         notyf()->error('Service not found!');
-        return redirect()->route('admin.service.index');
+        return redirect()->route('admin.services.index');
     }
 }

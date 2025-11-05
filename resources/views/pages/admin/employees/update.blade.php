@@ -9,7 +9,7 @@
         </div>
 
         <div>
-            <x-button-link href="{{ route('admin.employee.index') }}" text="Go back">
+            <x-button-link href="{{ route('admin.employees.index') }}" text="Go back">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
                     <path
                         d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z" />
@@ -19,7 +19,7 @@
     </div>
 
     {{-- Form Container --}}
-    <x-form.container action="{{ route('admin.employee.update', $employee->id) }}" method="PUT">
+    <x-form.container action="{{ route('admin.employees.update', $employee->id) }}" method="PUT">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {{-- Left Column --}}
             <div class="space-y-6">
@@ -70,7 +70,7 @@
 
         {{-- Submit Button --}}
         <div class="mt-8 flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-            <x-button-link href="{{ route('admin.employee.index') }}" text="Cancel" />
+            <x-button-link href="{{ route('admin.employees.index') }}" text="Cancel" />
             <x-form.button type="submit" text="Edit Employee">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path

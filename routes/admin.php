@@ -21,12 +21,12 @@ Route::prefix('admin')->name('admin.')
             Route::post('logout', 'logout')->name('logout');
         });
 
-        Route::resource('employee', EmployeeController::class);
+        Route::resource('employees', EmployeeController::class);
 
-        Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule.index');
-        Route::get('schedule/requests', [ScheduleChangeRequest::class, 'index'])->name('schedule.requests');
+        Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+        Route::get('schedules/requests', [ScheduleChangeRequest::class, 'index'])->name('schedules.requests');
 
-        Route::resource('service', ServiceController::class);
+        Route::resource('services', ServiceController::class);
 
-        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
+        Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     });

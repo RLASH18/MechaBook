@@ -26,8 +26,8 @@
                 <label class="px-3 text-xs text-blue-200 uppercase dark:text-gray-400">Management</label>
 
                 {{-- Employee --}}
-                <a wire:navigate href="{{ route('admin.employee.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.employee.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                <a wire:navigate href="{{ route('admin.employees.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.employees.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
                             d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z" />
@@ -36,7 +36,7 @@
                 </a>
 
                 {{-- Schedule Dropdown --}}
-                <div x-data="{ open: {{ request()->routeIs('admin.schedule.*') ? 'true' : 'false' }} }">
+                <div x-data="{ open: {{ request()->routeIs('admin.schedules.*') ? 'true' : 'false' }} }">
                     <button @click="open = !open" type="button"
                         class="flex items-center justify-between w-full px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.schedule.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                         <div class="flex items-center">
@@ -54,20 +54,20 @@
                     </button>
 
                     <div x-show="open" x-collapse class="ml-5 mt-2 space-y-2 border-l-2 border-blue-500/70 pl-2">
-                        <a wire:navigate href="{{ route('admin.schedule.index') }}"
-                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.index') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
+                        <a wire:navigate href="{{ route('admin.schedules.index') }}"
+                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedules.index') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
                             <span class="ml-2">Manage Schedules</span>
                         </a>
-                        <a wire:navigate href="{{ route('admin.schedule.requests') }}"
-                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedule.requests') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
+                        <a wire:navigate href="{{ route('admin.schedules.requests') }}"
+                            class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 text-sm {{ request()->routeIs('admin.schedules.requests') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:bg-blue-500 hover:text-white' }}">
                             <span class="ml-2">Change Requests</span>
                         </a>
                     </div>
                 </div>
 
                 {{-- Service --}}
-                <a wire:navigate href="{{ route('admin.service.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.service.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                <a wire:navigate href="{{ route('admin.services.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.services.*') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-5 h-5"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-briefcase-icon lucide-briefcase">
@@ -78,8 +78,8 @@
                 </a>
 
                 {{-- Appointment --}}
-                <a wire:navigate href="{{ route('admin.appointment.index') }}"
-                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.appointment.index') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
+                <a wire:navigate href="{{ route('admin.appointments.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg transition-colors duration-300 transform {{ request()->routeIs('admin.appointments.index') ? 'bg-white text-blue-600' : 'text-gray-300 hover:bg-gray-400 hover:text-gray-900' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path
                             d="M20 2C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22H6C5.44772 22 5 21.5523 5 21V19H3V17H5V15H3V13H5V11H3V9H5V7H3V5H5V3C5 2.44772 5.44772 2 6 2H20ZM19 4H7V20H19V4ZM14 8V11H17V13H13.999L14 16H12L11.999 13H9V11H12V8H14Z" />
