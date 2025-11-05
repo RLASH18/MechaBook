@@ -6,95 +6,93 @@ use App\Interfaces\shared\AppointmentInterface;
 use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class AppointmentRepository implements AppointmentInterface
 {
     /**
-     * Find an appointment by ID.
+     * Find an appointment by ID with optional relations.
      *
      * @param int $id
+     * @param array $relations
      * @return Appointment|null
      */
-    public function find(int $id): ?Appointment
+    public function findById(int $id, array $relations = []): ?Appointment
     {
-        return Appointment::with(['customer', 'employee', 'service'])->find($id);
+        $query = Appointment::query();
+
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+
+        return $query->find($id);
     }
 
     /**
-     * Update an existing appointment.
+     * Update an appointment with given data.
      *
      * @param Appointment $appointment
      * @param array $data
-     * @return Appointment
+     * @return bool
      */
-    public function update(Appointment $appointment, array $data): Appointment
+    public function update(Appointment $appointment, array $data): bool
     {
-        $appointment->update($data);
-        return $appointment->fresh(['customer', 'employee', 'service']);
+        return $appointment->update($data);
     }
 
     /**
-     * Update appointment status.
+     * Get base query for appointments with relations.
      *
-     * @param Appointment $appointment
-     * @param string $status
-     * @return Appointment
+     * @param array $relations
+     * @return Builder
      */
-    public function updateStatus(Appointment $appointment, string $status): Appointment
+    public function getBaseQuery(array $relations = []): Builder
     {
-        $appointment->update(['status' => $status]);
-        return $appointment->fresh(['customer', 'employee', 'service']);
+        $query = Appointment::query();
+
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+
+        return $query;
     }
 
     /**
-     * Get all appointments paginated with search and status filters (Admin)
+     * Get appointments query filtered by employee.
      *
-     * @param string|null $search
+     * @param int $employeeId
+     * @param array $relations
+     * @return Builder
+     */
+    public function getEmployeeAppointmentsQuery(int $employeeId, array $relations = []): Builder
+    {
+        return $this->getBaseQuery($relations)->where('employee_id', $employeeId);
+    }
+
+    /**
+     * Count appointments by status.
+     *
      * @param string|null $status
-     * @param int $perPage
-     * @return LengthAwarePaginator
+     * @param int|null $employeeId
+     * @return int
      */
-    public function getAllAppointmentsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    public function countByStatus(?string $status = null, ?int $employeeId = null): int
     {
-        return Appointment::with(['customer', 'employee', 'service'])
-            ->when($search, function ($query) use ($search) {
-                $query->whereHas('customer', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('email', 'like', '%' . $search . '%');
-                })
-                ->orWhereHas('service', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                });
-            })
-            ->when($status && $status !== 'all', function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->orderBy('appointment_date', 'desc')
-            ->orderBy('start_time', 'desc')
-            ->paginate($perPage);
+        $query = Appointment::query();
+
+        if ($employeeId) {
+            $query->where('employee_id', $employeeId);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        return $query->count();
     }
 
     /**
-     * Get status counts for all appointments (Admin)
-     *
-     * @return array
-     */
-    public function getStatusCounts(): array
-    {
-        return [
-            'all' => Appointment::count(),
-            'pending' => Appointment::where('status', 'pending')->count(),
-            'approved' => Appointment::where('status', 'approved')->count(),
-            'started' => Appointment::where('status', 'started')->count(),
-            'completed' => Appointment::where('status', 'completed')->count(),
-            'rejected' => Appointment::where('status', 'rejected')->count(),
-            'cancelled' => Appointment::where('status', 'cancelled')->count(),
-        ];
-    }
-
-    /**
-     * Get all employees ordered by name for appointment assignment
+     * Get all employees with employee role.
      *
      * @return Collection
      */
@@ -103,89 +101,5 @@ class AppointmentRepository implements AppointmentInterface
         return User::where('role', 'employee')
             ->orderBy('name')
             ->get();
-    }
-
-    /**
-     * Get appointment by ID
-     *
-     * @param int $appointmentId
-     * @return \App\Models\Appointment|null
-     */
-    public function getAppointmentById(int $appointmentId): ?Appointment
-    {
-        return Appointment::with(['customer', 'service', 'employee'])->find($appointmentId);
-    }
-
-    /**
-     * Update appointment status with proof image
-     *
-     * @param int $appointmentId
-     * @param string $status
-     * @param string|null $proofImagePath
-     * @return bool
-     */
-    public function updateStatusWithProof(int $appointmentId, string $status, ?string $proofImagePath): bool
-    {
-        $appointment = Appointment::find($appointmentId);
-
-        if (! $appointment) {
-            return false;
-        }
-
-        $updateData = ['status' => $status];
-
-        if ($status === 'started' && $proofImagePath) {
-            $updateData['started_proof_image'] = $proofImagePath;
-        } elseif ($status === 'completed' && $proofImagePath) {
-            $updateData['started_proof_image'] = $proofImagePath;
-        }
-
-        return $appointment->update($updateData);
-    }
-
-    /**
-     * Get employee appointments paginated with search and status filters (Employee)
-     *
-     * @param int $employeeId
-     * @param string|null $search
-     * @param string|null $status
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function getEmployeeAppointmentsPaginated(int $employeeId, ?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
-    {
-        return Appointment::with(['customer', 'service'])
-            ->where('employee_id', $employeeId)
-            ->when($search, function ($query) use ($search) {
-                $query->whereHas('customer', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('email', 'like', '%' . $search . '%');
-                })
-                ->orWhereHas('service', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                });
-            })
-            ->when($status && $status !== 'all', function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->orderBy('appointment_date', 'asc')
-            ->orderBy('start_time', 'asc')
-            ->paginate($perPage);
-    }
-
-    /**
-     * Get status counts for employee appointments (Employee)
-     *
-     * @param int $employeeId
-     * @return array
-     */
-    public function getEmployeeStatusCounts(int $employeeId): array
-    {
-        return [
-            'all' => Appointment::where('employee_id', $employeeId)->count(),
-            'approved' => Appointment::where('employee_id', $employeeId)->where('status', 'approved')->count(),
-            'started' => Appointment::where('employee_id', $employeeId)->where('status', 'started')->count(),
-            'completed' => Appointment::where('employee_id', $employeeId)->where('status', 'completed')->count(),
-        ];
     }
 }

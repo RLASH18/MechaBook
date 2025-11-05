@@ -10,7 +10,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class AppointmentService
 {
     /**
-     * Inject the AppointmentInterface (Repository).
+     * Inject the AppointmentInterface (Interface).
      *
      * @param AppointmentInterface $appointmentInterface
      */
@@ -26,7 +26,7 @@ class AppointmentService
      */
     public function getAppointmentById(int $id): ?Appointment
     {
-        return $this->appointmentInterface->find($id);
+        return $this->appointmentInterface->findById($id, ['customer', 'employee', 'service']);
     }
 
     /**
@@ -38,10 +38,15 @@ class AppointmentService
      */
     public function updateStatus(int $appointmentId, string $status): ?Appointment
     {
-        $appointment = $this->appointmentInterface->find($appointmentId);
-        if (! $appointment) return null;
+        $appointment = $this->findAppointmentWithRealations($appointmentId);
 
-        return $this->appointmentInterface->updateStatus($appointment, $status);
+        if (! $appointment) {
+            return null;
+        }
+
+        $this->appointmentInterface->update($appointment, ['status' => $status]);
+
+        return $appointment->fresh(['customer', 'employee', 'service']);
     }
 
     /**
@@ -53,15 +58,21 @@ class AppointmentService
      */
     public function approveAppointment(int $appointmentId, ?int $employeeId = null): ?Appointment
     {
-        $appointment = $this->appointmentInterface->find($appointmentId);
-        if (! $appointment) return null;
+        $appointment = $this->findAppointmentWithRealations($appointmentId);
+
+        if (! $appointment) {
+            return null;
+        }
 
         $data = ['status' => 'approved'];
+
         if ($employeeId) {
             $data['employee_id'] = $employeeId;
         }
 
-        return $this->appointmentInterface->update($appointment, $data);
+        $this->appointmentInterface->update($appointment, $data);
+
+        return $appointment->fresh(['customer', 'employee', 'service']);
     }
 
     /**
@@ -73,15 +84,21 @@ class AppointmentService
      */
     public function rejectAppointment(int $appointmentId, ?string $notes = null): ?Appointment
     {
-        $appointment = $this->appointmentInterface->find($appointmentId);
-        if (! $appointment) return null;
+        $appointment = $this->findAppointmentWithRealations($appointmentId);
+
+        if (! $appointment) {
+            return null;
+        }
 
         $data = ['status' => 'rejected'];
+
         if ($notes) {
             $data['notes'] = $notes;
         }
 
-        return $this->appointmentInterface->update($appointment, $data);
+        $this->appointmentInterface->update($appointment, $data);
+
+        return $appointment->fresh(['customer', 'employee', 'service']);
     }
 
     /**
@@ -94,7 +111,31 @@ class AppointmentService
      */
     public function getAllAppointmentsPaginated(?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
     {
-        return $this->appointmentInterface->getAllAppointmentsPaginated($search, $status, $perPage);
+        $query = $this->appointmentInterface->getBaseQuery(['customer', 'employee', 'service']);
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('customer', function ($customerQuery) use ($search) {
+                    $customerQuery->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                })
+                    ->orWhereHas('service', function ($serviceQuery) use ($search) {
+                        $serviceQuery->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        // Apply status filter
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        // Apply ordering
+        $query->orderBy('appointment_date', 'desc')
+            ->orderBy('start_time', 'desc');
+
+        return $query->paginate($perPage);
     }
 
     /**
@@ -104,7 +145,15 @@ class AppointmentService
      */
     public function getStatusCounts(): array
     {
-        return $this->appointmentInterface->getStatusCounts();
+        return [
+            'all' => $this->appointmentInterface->countByStatus(),
+            'pending' => $this->appointmentInterface->countByStatus('pending'),
+            'approved' => $this->appointmentInterface->countByStatus('approved'),
+            'started' => $this->appointmentInterface->countByStatus('started'),
+            'completed' => $this->appointmentInterface->countByStatus('completed'),
+            'rejected' => $this->appointmentInterface->countByStatus('rejected'),
+            'cancelled' => $this->appointmentInterface->countByStatus('cancelled'),
+        ];
     }
 
     /**
@@ -128,7 +177,31 @@ class AppointmentService
      */
     public function getEmployeeAppointmentsPaginated(int $employeeId, ?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
     {
-        return $this->appointmentInterface->getEmployeeAppointmentsPaginated($employeeId, $search, $status, $perPage);
+        $query = $this->appointmentInterface->getEmployeeAppointmentsQuery($employeeId, ['customer', 'service']);
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('customer', function ($customerQuery) use ($search) {
+                    $customerQuery->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                })
+                    ->orWhereHas('service', function ($serviceQuery) use ($search) {
+                        $serviceQuery->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        // Apply status filter
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        // Apply ordering (ascending for employees - upcoming appointments first)
+        $query->orderBy('appointment_date', 'asc')
+            ->orderBy('start_time', 'asc');
+
+        return $query->paginate($perPage);
     }
 
     /**
@@ -139,7 +212,12 @@ class AppointmentService
      */
     public function getEmployeeStatusCounts(int $employeeId): array
     {
-        return $this->appointmentInterface->getEmployeeStatusCounts($employeeId);
+        return [
+            'all' => $this->appointmentInterface->countByStatus(null, $employeeId),
+            'approved' => $this->appointmentInterface->countByStatus('approved', $employeeId),
+            'started' => $this->appointmentInterface->countByStatus('started', $employeeId),
+            'completed' => $this->appointmentInterface->countByStatus('completed', $employeeId),
+        ];
     }
 
     /**
@@ -152,14 +230,50 @@ class AppointmentService
      */
     public function updateStatusWithProof(int $appointmentId, string $status, $proofImage): bool
     {
-        $proofImagePath = null;
+        $appointment = $this->appointmentInterface->findById($appointmentId);
 
-        if ($proofImage) {
-            $extension = $proofImage->getClientOriginalExtension();
-            $proofImageName = 'proof_img_' . time() . '_' . uniqid() . '.' . $extension;
-            $proofImagePath = $proofImage->storeAs('appointment-proofs', $proofImageName, 'public');
+        if (! $appointment) {
+            return false;
         }
 
-        return $this->appointmentInterface->updateStatusWithProof($appointmentId, $status, $proofImagePath);
+        $updateData = ['status' => $status];
+
+        // Handle file upload if proof image is provided
+        if ($proofImage) {
+            $proofImagePath = $this->storeProofImage($proofImage);
+
+            if ($status === 'started') {
+                $updateData['started_proof_image'] = $proofImagePath;
+            } elseif ($status === 'completed') {
+                $updateData['completed_proof_image'] = $proofImagePath;
+            }
+        }
+
+        return $this->appointmentInterface->update($appointment, $updateData);
+    }
+
+    /**
+     * Store proof image and return the path.
+     *
+     * @param mixed $proofImage
+     * @return string
+     */
+    private function storeProofImage($proofImage): string
+    {
+        $extension = $proofImage->getClientOriginalExtension();
+        $proofImageName = 'proof_img_' . time() . '_' . uniqid() . '.' . $extension;
+
+        return $proofImage->storeAs('appointment-proofs', $proofImageName, 'public');
+    }
+
+    /**
+     * Find appointment with default relations or return null.
+     *
+     * @param int $id
+     * @return Appointment|null
+     */
+    private function findAppointmentWithRealations(int $id): ?Appointment
+    {
+        return $this->appointmentInterface->findById($id, ['customer', 'employee', 'service']);
     }
 }
