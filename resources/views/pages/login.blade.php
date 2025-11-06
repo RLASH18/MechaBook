@@ -1,7 +1,7 @@
 @extends('layouts.auth-layout')
 
 @section('form')
-    <form action="{{ route('signin.store') }}" method="POST">
+    <form action="{{ route('login.store') }}" method="POST">
         @csrf
 
         {{-- Email Field --}}
@@ -23,12 +23,12 @@
 
         {{-- Sign In Button --}}
         <div class="mt-6">
-            <x-form.button type="submit" text="Signin" class="w-full" />
+            <x-form.button type="submit" text="Login" class="w-full" />
         </div>
 
         {{-- Footer --}}
         <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet?
-            <a wire:navigate href="{{ route('signup') }}" class="text-blue-500 focus:outline-none focus:underline hover:underline">Signup</a>.
+            <a wire:navigate href="{{ route('register') }}" class="text-blue-500 focus:outline-none focus:underline hover:underline">Signup</a>.
         </p>
     </form>
 @endsection

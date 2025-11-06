@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
  * Customer Route
  */
 Route::prefix('customer')->name('customer.')
-    ->middleware(['auth', 'role:customer'])
+    ->middleware(['auth', 'role:customer', 'verified'])
     ->group(function () {
 
         Route::controller(CustomerController::class)->group(function () {

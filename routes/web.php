@@ -8,17 +8,26 @@ Route::get('/', function () {
 });
 
 /**
- * Auth Route
+ * Auth Routes
  */
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
-        Route::get('signin', 'showSigninForm')->name('signin');
-        Route::get('signup', 'showSignupForm')->name('signup');
-        Route::post('signin', 'signin')->name('signin.store');
-        Route::post('signup', 'signup')->name('signup.store');
+        Route::get('login', 'showLoginForm')->name('login');
+        Route::get('register', 'showRegisterForm')->name('register');
+        Route::post('login', 'login')->name('login.store');
+        Route::post('register', 'register')->name('register.store');
+        Route::get('auth/google', 'googleRedirect')->name('google.redirect');
+        Route::get('auth/google/callback', 'googleCallback')->name('google.callback');
     });
 });
 
-require __DIR__.'/admin.php';
-require __DIR__.'/employee.php';
-require __DIR__.'/customer.php';
+/**
+ * Email Verification Route
+ */
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
+
+require __DIR__ . '/admin.php';
+require __DIR__ . '/employee.php';
+require __DIR__ . '/customer.php';

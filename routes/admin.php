@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
  * Admin Route
  */
 Route::prefix('admin')->name('admin.')
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:admin', 'verified'])
     ->group(function () {
 
         Route::controller(AdminController::class)->group(function () {

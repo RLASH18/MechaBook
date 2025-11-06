@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
  * Employee Route
  */
 Route::prefix('employee')->name('employee.')
-    ->middleware(['auth', 'role:employee'])
+    ->middleware(['auth', 'role:employee', 'verified'])
     ->group(function () {
 
         Route::controller(EmployeeController::class)->group(function () {
