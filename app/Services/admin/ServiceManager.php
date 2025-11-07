@@ -57,7 +57,9 @@ class ServiceManager
     public function updateService(int $id, array $data, ?UploadedFile $image = null)
     {
         $service = $this->serviceInterface->find($id);
-        if (! $service) return null;
+        if (! $service) {
+            return null;
+        }
 
         // Replace old image with new one if uploaded
         if ($image) {
@@ -79,7 +81,9 @@ class ServiceManager
     public function deleteService(int $id)
     {
         $service = $this->serviceInterface->find($id);
-        if (! $service) return false;
+        if (! $service) {
+            return false;
+        }
 
         // Delete existing service image if present
         if ($service->service_img) {
@@ -98,7 +102,18 @@ class ServiceManager
      */
     public function getServicesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
     {
-        return $this->serviceInterface->getServicesPaginated($search, $perPage);
+        $query = $this->serviceInterface->getBaseQuery();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        return $query->paginate($perPage);
     }
 
     /**

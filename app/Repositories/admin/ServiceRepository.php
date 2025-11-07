@@ -4,7 +4,7 @@ namespace App\Repositories\admin;
 
 use App\Interfaces\admin\ServiceInterface;
 use App\Models\Service;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class ServiceRepository implements ServiceInterface
 {
@@ -55,19 +55,19 @@ class ServiceRepository implements ServiceInterface
     }
 
     /**
-     * Get services paginated with search filter.
+     * Get base query for services with relations.
      *
-     * @param string|null $search
-     * @param int $perPage
-     * @return LengthAwarePaginator
+     * @param array $relations
+     * @return Builder
      */
-    public function getServicesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    public function getBaseQuery(array $relations = []): Builder
     {
-        return Service::when($search, function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%');
-        })
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+        $query = Service::query();
+
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+
+        return $query;
     }
 }
