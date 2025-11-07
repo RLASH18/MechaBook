@@ -1,7 +1,19 @@
 <div>
     {{-- Service Table --}}
     <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4">
-        <x-table.header title="Service List" />
+        <x-table.header title="Service List">
+            <x-slot name="filter">
+                {{-- Category Filter --}}
+                <x-form.select name="status" wire:model.live="status" class="h-10 text-sm w-auto">
+                    <option value="all">All Categories</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="repair">Repair</option>
+                    <option value="inspection">Inspection</option>
+                    <option value="detailing">Detailing</option>
+                    <option value="diagnostic">Diagnostic</option>
+                </x-form.select>
+            </x-slot>
+        </x-table.header>
 
         {{-- Table --}}
         <div class="max-w-full overflow-x-auto custom-scrollbar">

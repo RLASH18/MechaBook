@@ -23,7 +23,7 @@ class ServiceIndex extends Component
     public function render()
     {
         // Fetch services using service manager
-        $services = $this->serviceManager->getServicesPaginated($this->search, 10);
+        $services = $this->serviceManager->getServicesPaginated($this->search, $this->status, 10);
 
         return view('livewire.admin.service-index', [
             'services' => $services

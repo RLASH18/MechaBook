@@ -15,16 +15,9 @@
                 class="h-10 w-full xl:w-[300px] rounded-lg border border-gray-300 bg-white pl-[42px] pr-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 focus:outline-hidden">
         </div>
 
-        {{-- Filter Button --}}
-        <button
-            class="inline-flex h-10 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50">
-            <svg class="stroke-current fill-white dark:fill-gray-800" width="20" height="20"
-                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.29 5.904h15.417M17.708 14.096H2.291" stroke-width="1.5" stroke-linecap="round" />
-                <circle cx="12.083" cy="5.904" r="2.167" stroke-width="1.5" />
-                <circle cx="7.917" cy="14.096" r="2.167" stroke-width="1.5" />
-            </svg>
-            Filter
-        </button>
+        {{-- Filter Slot (if provided) --}}
+        @if(isset($filter))
+            {{ $filter }}
+        @endif
     </div>
 </div>

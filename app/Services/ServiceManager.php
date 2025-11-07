@@ -94,13 +94,14 @@ class ServiceManager
     }
 
     /**
-     * Get services paginated with search filter.
+     * Get services paginated with search and status filters.
      *
      * @param string|null $search
+     * @param string|null $status
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getServicesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    public function getServicesPaginated(?string $search, ?string $status = 'all', int $perPage = 10): LengthAwarePaginator
     {
         $query = $this->serviceInterface->getBaseQuery();
 
@@ -109,6 +110,10 @@ class ServiceManager
                 $q->where('name', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%');
             });
+        }
+
+        if ($status && $status !== 'all') {
+            $query->where('category', ucfirst(strtolower($status)));
         }
 
         $query->orderBy('created_at', 'desc');
