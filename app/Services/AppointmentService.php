@@ -232,6 +232,63 @@ class AppointmentService
     }
 
     /**
+     * Get customer appointments paginated with search and status filters (Customer)
+     *
+     * @param int $customerId
+     * @param string|null $search
+     * @param string|null $status
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getCustomerAppointmentsPaginated(int $customerId, ?string $search, ?string $status, int $perPage = 10): LengthAwarePaginator
+    {
+        $query = $this->appointmentInterface->getCustomerAppointmentsQuery($customerId, ['employee', 'service']);
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('service', function ($serviceQuery) use ($search) {
+                    $serviceQuery->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('category', 'like', '%' . $search . '%');
+                })
+                    ->orWhereHas('employee', function ($employeeQuery) use ($search) {
+                        $employeeQuery->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        // Apply status filter
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        // Apply ordering (descending - recent appointments first)
+        $query->orderBy('appointment_date', 'desc')
+            ->orderBy('start_time', 'desc');
+
+        return $query->paginate($perPage);
+    }
+
+    /**
+     * Get status counts for customer appointments (Customer)
+     *
+     * @param int $customerId
+     * @return array
+     */
+    public function getCustomerStatusCounts(int $customerId): array
+    {
+        return [
+            'all' => $this->appointmentInterface->countByStatus(null, null, $customerId),
+            'pending' => $this->appointmentInterface->countByStatus('pending', null, $customerId),
+            'approved' => $this->appointmentInterface->countByStatus('approved', null, $customerId),
+            'started' => $this->appointmentInterface->countByStatus('started', null, $customerId),
+            'completed' => $this->appointmentInterface->countByStatus('completed', null, $customerId),
+            'rejected' => $this->appointmentInterface->countByStatus('rejected', null, $customerId),
+            'cancelled' => $this->appointmentInterface->countByStatus('cancelled', null, $customerId),
+        ];
+    }
+
+    /**
      * Update appointment status with proof image
      *
      * @param int $appointmentId
@@ -267,9 +324,9 @@ class AppointmentService
      * Store proof image and return the path.
      *
      * @param mixed $proofImage
-     * @return string
+     * @return string|null
      */
-    private function storeProofImage($proofImage): string
+    private function storeProofImage($proofImage): ?string
     {
         $extension = $proofImage->getClientOriginalExtension();
         $proofImageName = 'proof_img_' . time() . '_' . uniqid() . '.' . $extension;
@@ -288,7 +345,7 @@ class AppointmentService
     public function hasActiveAppointmentForService(int $customerId, int $serviceId): bool
     {
         $query = $this->appointmentInterface->getBaseQuery();
-        
+
         return $query->where('customer_id', $customerId)
             ->where('service_id', $serviceId)
             ->whereIn('status', ['pending', 'approved', 'started'])
@@ -305,7 +362,7 @@ class AppointmentService
     public function getCustomerActiveAppointmentServiceIds(int $customerId): array
     {
         $query = $this->appointmentInterface->getBaseQuery();
-        
+
         return $query->where('customer_id', $customerId)
             ->whereIn('status', ['pending', 'approved', 'started'])
             ->pluck('service_id')

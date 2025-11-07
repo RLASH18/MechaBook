@@ -18,7 +18,9 @@ class Appointment extends Model
         'start_time',
         'end_time',
         'status',
-        'notes'
+        'notes',
+        'started_proof_image',
+        'completed_proof_image'
     ];
 
     /**

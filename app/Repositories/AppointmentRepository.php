@@ -81,18 +81,35 @@ class AppointmentRepository implements AppointmentInterface
     }
 
     /**
+     * Get appointments query filtered by customer.
+     *
+     * @param int $customerId
+     * @param array $relations
+     * @return Builder
+     */
+    public function getCustomerAppointmentsQuery(int $customerId, array $relations = []): Builder
+    {
+        return $this->getBaseQuery($relations)->where('customer_id', $customerId);
+    }
+
+    /**
      * Count appointments by status.
      *
      * @param string|null $status
      * @param int|null $employeeId
+     * @param int|null $customerId
      * @return int
      */
-    public function countByStatus(?string $status = null, ?int $employeeId = null): int
+    public function countByStatus(?string $status = null, ?int $employeeId = null, ?int $customerId = null): int
     {
         $query = Appointment::query();
 
         if ($employeeId) {
             $query->where('employee_id', $employeeId);
+        }
+
+        if ($customerId) {
+            $query->where('customer_id', $customerId);
         }
 
         if ($status) {

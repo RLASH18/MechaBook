@@ -35,7 +35,7 @@
             @php
                 // Check if customer already has active appointment for this service
                 $hasActiveAppointment = in_array($service->id, $activeAppointmentServiceIds);
-                
+
                 // Category color mapping
                 $categoryColors = [
                     'Maintenance' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'border' => 'border-blue-200',],
@@ -133,7 +133,7 @@
                             </svg>
                             <span class="whitespace-nowrap">Details</span>
                         </button>
-                        
+
                         @if($hasActiveAppointment)
                             <button disabled
                                 class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed opacity-60"

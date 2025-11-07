@@ -8,4 +8,6 @@
             </x-page-header>
         </div>
     </div>
+
+    @livewire('customer.appointment-index')
 @endsection
