@@ -1,33 +1,28 @@
 <div>
     {{-- Search Bar --}}
     <div class="bg-white rounded-2xl p-6 border border-gray-200 mb-6">
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex flex-col md:flex-row gap-4 items-center md:justify-between">
+            {{-- Search Input --}}
             <div class="flex-1 max-w-md">
                 <div class="relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-blue-600">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-blue-600 z-10">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z" />
                         </svg>
                     </span>
-                    <input type="text" wire:model.live="search" placeholder="Search Employee..."
-                        class="h-10 w-full xl:w-[300px] rounded-lg border border-gray-300 bg-white pl-[42px] pr-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 focus:outline-hidden">
+                    <x-form.input name="search" wire:model.live="search" placeholder="Search Employee..." class="pl-12 h-10 text-sm w-full xl:w-[300px]" />
                 </div>
             </div>
 
-            <div class="relative inline-block">
-                <select wire:model.live="status"
-                    class="appearance-none px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-hidden pr-10">
+            {{-- Status Filter --}}
+            <div class="md:ml-auto">
+                <x-form.select name="status" wire:model.live="status" class="h-10 text-sm w-auto justify-items-end">
                     <option value="all">All Status</option>
                     <option value="active">Active</option>
                     <option value="idle">Idle</option>
                     <option value="inactive">Inactive</option>
-                </select>
-                <svg class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
+                </x-form.select>
             </div>
         </div>
     </div>
