@@ -51,7 +51,9 @@ class EmployeeService
     public function updateEmployee(int $id, array $data)
     {
         $user = $this->employeeInterface->find($id);
-        if (!$user) return null;
+        if (! $user) {
+            return null;
+        }
 
         if (empty($data['password'])) {
             unset($data['password']);
@@ -69,7 +71,9 @@ class EmployeeService
     public function deleteEmployee(int $id)
     {
         $user = $this->employeeInterface->find($id);
-        if (!$user) return false;
+        if (! $user)  {
+            return false;
+        }
 
         return $this->employeeInterface->delete($user);
     }
@@ -83,6 +87,18 @@ class EmployeeService
      */
     public function getEmployeesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
     {
-        return $this->employeeInterface->getEmployeesPaginated($search, $perPage);
+        $query = $this->employeeInterface->getBaseQuery();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%');
+            });
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        return $query->paginate($perPage);
     }
 }

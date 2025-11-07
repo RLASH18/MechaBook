@@ -4,7 +4,7 @@ namespace App\Repositories\admin;
 
 use App\Interfaces\admin\EmployeeInterface;
 use App\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class EmployeeRepository implements EmployeeInterface
 {
@@ -55,21 +55,19 @@ class EmployeeRepository implements EmployeeInterface
     }
 
     /**
-     * Get employees paginated with search filter.
+     * Get base query for employees with relations.
      *
-     * @param string|null $search
-     * @param int $perPage
-     * @return LengthAwarePaginator
+     * @param array $relations
+     * @return Builder
      */
-    public function getEmployeesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator
+    public function getBaseQuery(array $relations = []): Builder
     {
-        return User::where('role', 'employee')
-            ->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+        $query = User::where('role', 'employee');
+
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+
+        return $query;
     }
 }

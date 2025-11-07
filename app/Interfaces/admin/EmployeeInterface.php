@@ -3,7 +3,7 @@
 namespace App\Interfaces\admin;
 
 use App\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 interface EmployeeInterface
 {
@@ -11,5 +11,5 @@ interface EmployeeInterface
     public function create(array $data): User;
     public function update(User $user, array $data): User;
     public function delete(User $user): bool;
-    public function getEmployeesPaginated(?string $search, int $perPage = 10): LengthAwarePaginator;
+    public function getBaseQuery(array $relations = []): Builder;
 }
