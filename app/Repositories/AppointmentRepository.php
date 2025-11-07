@@ -29,6 +29,17 @@ class AppointmentRepository implements AppointmentInterface
     }
 
     /**
+     * Create a new appointment.
+     *
+     * @param array $data
+     * @return Appointment
+     */
+    public function create(array $data): Appointment
+    {
+        return Appointment::create($data);
+    }
+
+    /**
      * Update an appointment with given data.
      *
      * @param Appointment $appointment

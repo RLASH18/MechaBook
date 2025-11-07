@@ -30,6 +30,17 @@ class AppointmentService
     }
 
     /**
+     * Create a new appointment.
+     *
+     * @param array $data
+     * @return Appointment|null
+     */
+    public function createAppointment(array $data): Appointment
+    {
+        return $this->appointmentInterface->create($data);
+    }
+
+    /**
      * Update appointment status.
      *
      * @param int $appointmentId
@@ -264,6 +275,41 @@ class AppointmentService
         $proofImageName = 'proof_img_' . time() . '_' . uniqid() . '.' . $extension;
 
         return $proofImage->storeAs('appointment-proofs', $proofImageName, 'public');
+    }
+
+    /**
+     * Check if customer has an active appointment for a specific service.
+     * Active statuses: pending, approved, started
+     *
+     * @param int $customerId
+     * @param int $serviceId
+     * @return bool
+     */
+    public function hasActiveAppointmentForService(int $customerId, int $serviceId): bool
+    {
+        $query = $this->appointmentInterface->getBaseQuery();
+        
+        return $query->where('customer_id', $customerId)
+            ->where('service_id', $serviceId)
+            ->whereIn('status', ['pending', 'approved', 'started'])
+            ->exists();
+    }
+
+    /**
+     * Get all service IDs where customer has active appointments.
+     * Active statuses: pending, approved, started
+     *
+     * @param int $customerId
+     * @return array
+     */
+    public function getCustomerActiveAppointmentServiceIds(int $customerId): array
+    {
+        $query = $this->appointmentInterface->getBaseQuery();
+        
+        return $query->where('customer_id', $customerId)
+            ->whereIn('status', ['pending', 'approved', 'started'])
+            ->pluck('service_id')
+            ->toArray();
     }
 
     /**

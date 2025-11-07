@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 interface AppointmentInterface
 {
     public function findById(int $id, array $relations = []): ?Appointment;
+    public function create(array $data): Appointment;
     public function update(Appointment $appointment, array $data): bool;
     public function getBaseQuery(array $relations = []): Builder;
     public function getEmployeeAppointmentsQuery(int $employeeId, array $relations = []): Builder;

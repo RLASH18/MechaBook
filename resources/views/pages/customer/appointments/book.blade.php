@@ -8,4 +8,7 @@
             </x-page-header>
         </div>
     </div>
+
+    @livewire('customer.book-appointment.book-index')
+    @livewire('customer.book-appointment.book-actions')
 @endsection
