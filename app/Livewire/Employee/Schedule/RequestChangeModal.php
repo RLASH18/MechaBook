@@ -3,8 +3,8 @@
 namespace App\Livewire\Employee\Schedule;
 
 use App\Http\Requests\employee\StoreScheduleChangeRequest;
-use App\Services\shared\ScheduleChangeRequestService;
-use App\Services\shared\EmployeeScheduleService;
+use App\Services\ScheduleChangeRequestService;
+use App\Services\EmployeeScheduleService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

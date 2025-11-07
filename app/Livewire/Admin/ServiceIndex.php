@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\admin\ServiceManager;
+use App\Services\ServiceManager;
 use Livewire\Component;
 
 class ServiceIndex extends Component

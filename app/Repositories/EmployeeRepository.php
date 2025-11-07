@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\admin;
+namespace App\Repositories;
 
-use App\Interfaces\admin\EmployeeInterface;
+use App\Interfaces\EmployeeInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 

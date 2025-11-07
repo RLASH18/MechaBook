@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\ScheduleChangeRequest;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\shared\ScheduleChangeRequestService;
+use App\Services\ScheduleChangeRequestService;
 use Livewire\Component;
 
 class RequestIndex extends Component

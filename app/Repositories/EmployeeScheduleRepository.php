@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\shared;
+namespace App\Repositories;
 
-use App\Interfaces\shared\EmployeeScheduleInterface;
+use App\Interfaces\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services;
 
-use App\Interfaces\admin\ServiceInterface;
+use App\Interfaces\ServiceInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

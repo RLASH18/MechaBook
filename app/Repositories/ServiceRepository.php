@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\admin;
+namespace App\Repositories;
 
-use App\Interfaces\admin\ServiceInterface;
+use App\Interfaces\ServiceInterface;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 

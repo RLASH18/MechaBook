@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Employee\Schedule;
 
-use App\Services\shared\EmployeeScheduleService;
+use App\Services\EmployeeScheduleService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;

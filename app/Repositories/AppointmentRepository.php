@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\shared;
+namespace App\Repositories;
 
-use App\Interfaces\shared\AppointmentInterface;
+use App\Interfaces\AppointmentInterface;
 use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;

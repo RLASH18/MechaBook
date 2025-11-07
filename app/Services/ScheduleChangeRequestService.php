@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\shared;
+namespace App\Services;
 
-use App\Interfaces\shared\ScheduleChangeRequestInterface;
+use App\Interfaces\ScheduleChangeRequestInterface;
 use App\Models\EmployeeSchedule;
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Collection;

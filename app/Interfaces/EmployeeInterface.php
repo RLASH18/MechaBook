@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\admin;
+namespace App\Interfaces;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;

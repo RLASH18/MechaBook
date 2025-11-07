@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\admin\EmployeeService;
+use App\Services\EmployeeService;
 use Livewire\Component;
 
 class EmployeeIndex extends Component

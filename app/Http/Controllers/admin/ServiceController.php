@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\service\StoreServiceRequest;
 use App\Http\Requests\admin\service\UpdateServiceRequest;
-use App\Services\admin\ServiceManager;
+use App\Services\ServiceManager;
 
 class ServiceController extends Controller
 {

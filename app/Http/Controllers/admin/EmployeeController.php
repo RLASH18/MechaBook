@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\employee\StoreEmployeeRequest;
 use App\Http\Requests\admin\employee\UpdateEmployeeRequest;
-use App\Services\admin\EmployeeService;
+use App\Services\EmployeeService;
 use Illuminate\Http\RedirectResponse;
 
 class EmployeeController extends Controller

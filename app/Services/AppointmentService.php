@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\shared;
+namespace App\Services;
 
-use App\Interfaces\shared\AppointmentInterface;
+use App\Interfaces\AppointmentInterface;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

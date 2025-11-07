@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
-use App\Services\shared\ScheduleChangeRequestService;
-use App\Services\shared\EmployeeScheduleService;
+use App\Services\ScheduleChangeRequestService;
+use App\Services\EmployeeScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

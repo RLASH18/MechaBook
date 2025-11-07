@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\shared;
+namespace App\Repositories;
 
-use App\Interfaces\shared\ScheduleChangeRequestInterface;
+use App\Interfaces\ScheduleChangeRequestInterface;
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

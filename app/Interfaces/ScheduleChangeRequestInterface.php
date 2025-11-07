@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\shared;
+namespace App\Interfaces;
 
 use App\Models\ScheduleChangeRequest;
 use Illuminate\Database\Eloquent\Collection;

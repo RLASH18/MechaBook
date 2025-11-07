@@ -3,7 +3,7 @@
 namespace App\Livewire\Employee\Appointment;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\shared\AppointmentService;
+use App\Services\AppointmentService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

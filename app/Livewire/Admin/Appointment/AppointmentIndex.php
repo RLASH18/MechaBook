@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Appointment;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\shared\AppointmentService;
+use App\Services\AppointmentService;
 use Livewire\Component;
 
 class AppointmentIndex extends Component

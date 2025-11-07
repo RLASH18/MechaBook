@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Schedule;
 
 use App\Livewire\Traits\WithFiltersAndPagination;
-use App\Services\shared\EmployeeScheduleService;
+use App\Services\EmployeeScheduleService;
 use Livewire\Component;
 
 class ScheduleIndex extends Component

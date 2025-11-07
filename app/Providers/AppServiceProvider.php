@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use App\Interfaces\admin\EmployeeInterface;
-use App\Interfaces\admin\ServiceInterface;
-use App\Interfaces\shared\SettingsInterface;
-use App\Interfaces\shared\AppointmentInterface;
-use App\Interfaces\shared\EmployeeScheduleInterface;
-use App\Interfaces\shared\ScheduleChangeRequestInterface;
-use App\Repositories\admin\EmployeeRepository;
-use App\Repositories\admin\ServiceRepository;
-use App\Repositories\shared\SettingsRepository;
-use App\Repositories\shared\AppointmentRepository;
-use App\Repositories\shared\EmployeeScheduleRepository;
-use App\Repositories\shared\ScheduleChangeRequestRepository;
+use App\Interfaces\EmployeeInterface;
+use App\Interfaces\ServiceInterface;
+use App\Interfaces\SettingsInterface;
+use App\Interfaces\AppointmentInterface;
+use App\Interfaces\EmployeeScheduleInterface;
+use App\Interfaces\ScheduleChangeRequestInterface;
+use App\Repositories\EmployeeRepository;
+use App\Repositories\ServiceRepository;
+use App\Repositories\SettingsRepository;
+use App\Repositories\AppointmentRepository;
+use App\Repositories\EmployeeScheduleRepository;
+use App\Repositories\ScheduleChangeRequestRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

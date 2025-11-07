@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\shared;
+namespace App\Services;
 
-use App\Interfaces\shared\EmployeeScheduleInterface;
+use App\Interfaces\EmployeeScheduleInterface;
 use App\Models\EmployeeSchedule;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

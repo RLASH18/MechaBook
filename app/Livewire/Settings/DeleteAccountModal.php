@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Settings;
 
-use App\Services\shared\SettingsService;
+use App\Services\SettingsService;
 use App\Traits\LogoutHandler;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;

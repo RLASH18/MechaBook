@@ -4,8 +4,7 @@ namespace App\Livewire\Admin\Schedule;
 
 use App\Http\Requests\admin\schedule\StoreScheduleRequest;
 use App\Http\Requests\admin\schedule\UpdateScheduleRequest;
-use App\Services\shared\EmployeeScheduleService;
-use Illuminate\Validation\Rule;
+use App\Services\EmployeeScheduleService;
 use Livewire\Component;
 
 class ScheduleModal extends Component
@@ -49,11 +48,11 @@ class ScheduleModal extends Component
     {
         $this->resetForm();
         $this->employee_id = $employeeId;
-        
+
         // Get existing scheduled days for this employee
         $schedules = $this->scheduleService->getEmployeeSchedules($employeeId);
         $this->existingScheduledDays = $schedules->pluck('day_of_week')->toArray();
-        
+
         $this->showCreateModal = true;
     }
 

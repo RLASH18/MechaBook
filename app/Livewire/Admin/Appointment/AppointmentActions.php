@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Appointment;
 
 use App\Models\User;
-use App\Services\shared\AppointmentService;
+use App\Services\AppointmentService;
 use App\UserRole;
 use Livewire\Component;
 

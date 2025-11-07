@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services;
 
-use App\Interfaces\admin\EmployeeInterface;
+use App\Interfaces\EmployeeInterface;
 use App\UserRole;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 

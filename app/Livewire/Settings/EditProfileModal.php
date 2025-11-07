@@ -3,7 +3,7 @@
 namespace App\Livewire\Settings;
 
 use App\Http\Requests\settings\UpdateProfileRequest;
-use App\Services\shared\SettingsService;
+use App\Services\SettingsService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\ScheduleChangeRequest;
 
-use App\Services\shared\ScheduleChangeRequestService;
+use App\Services\ScheduleChangeRequestService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\shared;
+namespace App\Interfaces;
 
 use App\Models\EmployeeSchedule;
 use Illuminate\Database\Eloquent\Builder;
