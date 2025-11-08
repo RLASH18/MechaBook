@@ -64,7 +64,7 @@ class ServiceRepository implements ServiceInterface
     {
         $query = Service::query();
 
-        if (!empty($relations)) {
+        if (! empty($relations)) {
             $query->with($relations);
         }
 

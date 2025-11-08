@@ -26,7 +26,9 @@ class SettingsService
     public function updateUserProfile(int $userId, array $data)
     {
         $user = $this->settingsInterface->find($userId);
-        if (! $user) return null;
+        if (! $user) {
+            return null;
+        }
 
         // Filter only allowed fields
         $allowedFields = ['name', 'email', 'phone'];
@@ -51,7 +53,7 @@ class SettingsService
         }
 
         // Verify current password
-        if (!Hash::check($currentPassword, $user->password)) {
+        if (! Hash::check($currentPassword, $user->password)) {
             return ['success' => false, 'message' => 'Current password is incorrect'];
         }
 
@@ -78,7 +80,7 @@ class SettingsService
         }
 
         // Verify password before deletion
-        if (!Hash::check($password, $user->password)) {
+        if (! Hash::check($password, $user->password)) {
             return ['success' => false, 'message' => 'Password is incorrect'];
         }
 

@@ -21,7 +21,7 @@ class AppointmentRepository implements AppointmentInterface
     {
         $query = Appointment::query();
 
-        if (!empty($relations)) {
+        if (! empty($relations)) {
             $query->with($relations);
         }
 
@@ -61,7 +61,7 @@ class AppointmentRepository implements AppointmentInterface
     {
         $query = Appointment::query();
 
-        if (!empty($relations)) {
+        if (! empty($relations)) {
             $query->with($relations);
         }
 

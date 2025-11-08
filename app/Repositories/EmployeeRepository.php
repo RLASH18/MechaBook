@@ -64,7 +64,7 @@ class EmployeeRepository implements EmployeeInterface
     {
         $query = User::where('role', 'employee');
 
-        if (!empty($relations)) {
+        if (! empty($relations)) {
             $query->with($relations);
         }
 
