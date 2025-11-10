@@ -32,6 +32,7 @@ class UpdateProfileRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore(Auth::id())
             ],
             'phone' => 'nullable|string|max:20|regex:/^[0-9+\-\s()]*$/',
+            'profileImage' => 'nullable|image|max:2048',
         ];
     }
 
@@ -50,6 +51,8 @@ class UpdateProfileRequest extends FormRequest
             'email.unique' => 'This email address is already in use.',
             'phone.regex' => 'Please provide a valid phone number.',
             'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'profileImage.image' => 'The file must be an image.',
+            'profileImage.max' => 'The image must not exceed 2MB.',
         ];
     }
 
@@ -64,6 +67,7 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'full name',
             'email' => 'email address',
             'phone' => 'phone number',
+            'profileImage' => 'profile image',
         ];
     }
 }

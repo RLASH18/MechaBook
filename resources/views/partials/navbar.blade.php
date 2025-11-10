@@ -1,4 +1,3 @@
-{{-- Navbar --}}
 <header class="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
     {{-- Left side --}}
     <button
@@ -33,7 +32,15 @@
 
         {{-- Profile --}}
         <div class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-lg transition">
-            <img class="w-9 h-9 rounded-full border border-gray-300" src="https://i.pravatar.cc/40" alt="User Avatar">
+            @if(auth()->user()->profile_image)
+                <img class="w-9 h-9 rounded-full border border-gray-300 object-cover" src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="User Avatar">
+            @else
+                <div class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center border border-gray-300">
+                    <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            @endif
             <span class="text-gray-800 font-medium">{{ auth()->user()->name }}</span>
         </div>
     </div>

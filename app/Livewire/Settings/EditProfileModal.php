@@ -6,9 +6,12 @@ use App\Http\Requests\settings\UpdateProfileRequest;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditProfileModal extends Component
 {
+    use WithFileUploads;
+
     // Modal state
     public $showModal = false;
 
@@ -16,6 +19,8 @@ class EditProfileModal extends Component
     public $name;
     public $email;
     public $phone;
+    public $profileImage;
+    public $currentProfileImage;
 
     // Listen for edit profile event
     protected $listeners = ['openEditProfileModal'];
@@ -39,6 +44,7 @@ class EditProfileModal extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone = $user->phone;
+        $this->currentProfileImage = $user->profile_image;
         $this->showModal = true;
     }
 
@@ -56,7 +62,7 @@ class EditProfileModal extends Component
      */
     public function resetForm()
     {
-        $this->reset(['name', 'email', 'phone']);
+        $this->reset(['name', 'email', 'phone', 'profileImage']);
         $this->resetValidation();
     }
 
@@ -68,7 +74,10 @@ class EditProfileModal extends Component
         $request = new UpdateProfileRequest();
         $validated = $this->validate($request->rules(), $request->messages());
 
-        $result = $this->settingsService->updateUserProfile(Auth::id(), $validated);
+        // Remove profileImage from validated data since we pass it separately
+        $profileData = collect($validated)->except('profileImage')->toArray();
+
+        $result = $this->settingsService->updateUserProfile(Auth::id(), $profileData, $this->profileImage);
 
         if ($result) {
             notyf()->success('Profile updated successfully!');

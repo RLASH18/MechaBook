@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\SettingsInterface;
 use App\Models\UserSocialLink;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsService
 {
@@ -22,9 +23,10 @@ class SettingsService
      *
      * @param int $userId
      * @param array $data
+     * @param \Illuminate\Http\UploadedFile|null $profileImage
      * @return \App\Models\User|null
      */
-    public function updateUserProfile(int $userId, array $data)
+    public function updateUserProfile(int $userId, array $data, $profileImage = null)
     {
         $user = $this->settingsInterface->find($userId);
         if (! $user) {
@@ -32,8 +34,23 @@ class SettingsService
         }
 
         // Filter only allowed fields
-        $allowedFields = ['name', 'email', 'phone'];
+        $allowedFields = ['name', 'email', 'phone', 'profile_image'];
         $filteredData = array_intersect_key($data, array_flip($allowedFields));
+
+        // Handle profile image upload
+        if ($profileImage) {
+            // Delete old profile image if exists
+            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+
+            // Store new profile image
+            $extension = $profileImage->getClientOriginalExtension();
+            $imageName = 'profile_img_' . time() . '_' . uniqid() . '.' . $extension;
+            $imagePath = $profileImage->storeAs('profile-images', $imageName, 'public');
+
+            $filteredData['profile_image'] = $imagePath;
+        }
 
         return $this->settingsInterface->updateProfile($user, $filteredData);
     }
@@ -83,6 +100,11 @@ class SettingsService
         // Verify password before deletion
         if (! Hash::check($password, $user->password)) {
             return ['success' => false, 'message' => 'Password is incorrect'];
+        }
+
+        // Delete profile image if exists
+        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+            Storage::disk('public')->delete($user->profile_image);
         }
 
         // Delete the account
