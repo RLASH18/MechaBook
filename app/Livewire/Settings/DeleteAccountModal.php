@@ -18,7 +18,7 @@ class DeleteAccountModal extends Component
     public $password;
 
     // Listen for delete account event
-    protected $listeners = ['openDeleteAccountModal' => 'openModal'];
+    protected $listeners = ['openDeleteAccountModal'];
 
     protected $settingsService;
 
@@ -33,7 +33,7 @@ class DeleteAccountModal extends Component
     /**
      * Open the modal.
      */
-    public function openModal()
+    public function openDeleteAccountModal()
     {
         $this->showModal = true;
     }

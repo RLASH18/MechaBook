@@ -18,7 +18,7 @@ class EditPasswordModal extends Component
     public $new_password_confirmation;
 
     // Listen for edit password event
-    protected $listeners = ['openEditPasswordModal' => 'openModal'];
+    protected $listeners = ['openEditPasswordModal'];
 
     protected $settingsService;
 
@@ -33,7 +33,7 @@ class EditPasswordModal extends Component
     /**
      * Open the modal.
      */
-    public function openModal()
+    public function openEditPasswordModal()
     {
         $this->showModal = true;
     }

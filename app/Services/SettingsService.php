@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\SettingsInterface;
+use App\Models\UserSocialLink;
 use Illuminate\Support\Facades\Hash;
 
 class SettingsService
@@ -91,5 +92,39 @@ class SettingsService
         }
 
         return ['success' => false, 'message' => 'Failed to delete account'];
+    }
+
+    /**
+     * Update user social links.
+     *
+     * @param int $userId
+     * @param array $socialLinksData
+     * @return bool
+     */
+    public function updateUserSocialLinks(int $userId, array $socialLinksData): bool
+    {
+        $user = $this->settingsInterface->find($userId);
+        if (! $user) {
+            return false;
+        }
+
+        $platforms = ['facebook', 'twitter', 'linkedin', 'instagram', 'youtube', 'github', 'website'];
+
+        foreach ($platforms as $platform) {
+            $url = $socialLinksData[$platform] ?? null;
+
+            if (! empty($url)) {
+                UserSocialLink::updateOrCreate(
+                    ['user_id' => $user->id, 'platform' => $platform],
+                    ['url' => $url, 'is_active' => true]
+                );
+            } else {
+                UserSocialLink::where('user_id', $user->id)
+                    ->where('platform', $platform)
+                    ->delete();
+            }
+        }
+
+        return true;
     }
 }

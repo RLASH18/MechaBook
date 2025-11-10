@@ -18,7 +18,7 @@ class EditProfileModal extends Component
     public $phone;
 
     // Listen for edit profile event
-    protected $listeners = ['openEditProfileModal' => 'openModal'];
+    protected $listeners = ['openEditProfileModal'];
 
     protected $settingsService;
 
@@ -33,7 +33,7 @@ class EditProfileModal extends Component
     /**
      * Open the modal and populate with current user data.
      */
-    public function openModal()
+    public function openEditProfileModal()
     {
         $user = Auth::user();
         $this->name = $user->name;
@@ -73,7 +73,6 @@ class EditProfileModal extends Component
         if ($result) {
             notyf()->success('Profile updated successfully!');
             $this->closeModal();
-            $this->dispatch('profileUpdated');
         } else {
             notyf()->error('Failed to update profile');
         }

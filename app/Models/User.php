@@ -101,4 +101,24 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(ScheduleChangeRequest::class, 'reviewed_by');
     }
+
+    /**
+     * Get all social links for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socialLinks(): HasMany
+    {
+        return $this->hasMany(UserSocialLink::class, 'user_id');
+    }
+
+    /**
+     * Get active social links for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activeSocialLinks(): HasMany
+    {
+        return $this->hasMany(UserSocialLink::class)->where('is_active', true);
+    }
 }
