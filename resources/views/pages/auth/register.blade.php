@@ -1,5 +1,5 @@
 @extends('layouts.auth-layout')
-
+@section('header', 'Register to create your account')
 @section('form')
     <form action="{{ route('register.store') }}" method="POST">
         @csrf
@@ -40,7 +40,7 @@
 
         {{-- Footer --}}
         <p class="mt-6 text-sm text-center text-gray-400">Already have an account?
-            <a wire:navigate href="{{ route('login') }}" class="text-blue-600 focus:outline-none focus:underline hover:underline">Signin</a>.
+            <a wire:navigate href="{{ route('login') }}" class="text-blue-600 focus:outline-none focus:underline hover:underline">Login</a>.
         </p>
     </form>
 @endsection

@@ -1,5 +1,5 @@
 @extends('layouts.auth-layout')
-
+@section('header', 'Login to access your account')
 @section('form')
     <form action="{{ route('login.store') }}" method="POST">
         @csrf
@@ -15,7 +15,7 @@
         <div class="mt-4">
             <div class="flex justify-between">
                 <x-form.label for="password">Password</x-form.label>
-                <a href="#" class="text-xs text-blue-600 hover:underline">Forgot Password?</a>
+                <a wire:navigate href="{{ route('password.request') }}" class="text-xs text-blue-600 hover:underline">Forgot Password?</a>
             </div>
             <x-form.input id="password" name="password" type="password" placeholder="Enter your password" />
             <x-form.error name="password" />
@@ -28,7 +28,7 @@
 
         {{-- Footer --}}
         <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet?
-            <a wire:navigate href="{{ route('register') }}" class="text-blue-500 focus:outline-none focus:underline hover:underline">Signup</a>.
+            <a wire:navigate href="{{ route('register') }}" class="text-blue-500 focus:outline-none focus:underline hover:underline">Register</a>.
         </p>
     </form>
 @endsection
